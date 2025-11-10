@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Traits\HasHierarchy;
 
 class Category extends Model
 {
+    use HasHierarchy;
+
     protected $primaryKey = 'id_category'; // Definimos la PK personalizada
 
     protected $fillable = [
