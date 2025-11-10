@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\EnumArticleStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -27,7 +28,8 @@ return new class extends Migration
                 ->onDelete('restrict');
 
             $table->timestamp('published_at')->nullable();
-            $table->enum('status', ['published', 'draft', 'scheduled'])->default('draft');
+            $table->string('status')
+                ->default(EnumArticleStatus::Draft->value);
             $table->string('featured_image_url')->nullable();
             $table->boolean('allows_comments')->default(true);
 

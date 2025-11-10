@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\EnumCommentStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,7 +23,8 @@ return new class extends Migration
             $table->string('author_email');
             $table->text('content');
 
-            $table->enum('status', ['approved', 'pending', 'spam'])->default('pending');
+            $table->string('status')
+                ->default(EnumCommentStatus::Pending->value);
 
             $table->timestamps();
         });
