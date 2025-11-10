@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Traits\HasHierarchy;
 
 class Category extends Model
 {
-    use HasHierarchy;
+    use HasFactory, HasHierarchy;
 
     protected $primaryKey = 'id_category'; // Definimos la PK personalizada
 

@@ -4,13 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 
 class Article extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $primaryKey = 'id_article';
 
@@ -31,6 +34,23 @@ class Article extends Model
         'published_at' => 'datetime',
         'allows_comments' => 'boolean',
     ];
+
+    #[Scope]
+    public function published(Builder $query): void
+    {
+        $query->where('status', 'published')
+              ->where('published_at', '<=', now());
+    }
+
+    #[Scope]
+    public function featured(Builder $query): void
+    {
+        // Si tuvieras un campo boolean 'is_featured', lo usarías aquí.
+        // Por ahora, asumiremos que los que tienen imagen destacada pueden ser "featured"
+        // o simplemente los más recientes.
+        $query->whereNotNull('featured_image_url');
+    }
+
 
     // Relación: Pertenece a un autor (User)
     public function author(): BelongsTo
