@@ -16,20 +16,21 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
+use App\Filament\Resources\ArticleResource\RelationManagers\CommentsRelationManager;
 
 class ArticleResource extends Resource
 {
     protected static ?string $model = Article::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text'; // Icono más apropiado para artículos
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static ?string $navigationGroup = 'Content Management'; // Opcional: para agrupar en el menú
+    protected static ?string $navigationGroup = 'Content Management';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Grid::make(3) // Creamos un Grid principal de 3 columnas
+                Grid::make(3)
                     ->schema([
                         // --- COLUMNA PRINCIPAL (Ocupa 2 de 3 espacios) ---
                         Group::make()
@@ -49,10 +50,10 @@ class ArticleResource extends Resource
                                             ->disabled() // Usualmente el slug no se debe editar manualmente a menos que sea necesario
                                             ->dehydrated(), // Asegura que se envíe aunque esté disabled
 
-                                        Forms\Components\RichEditor::make('content') // Mejor que Textarea para artículos
+                                        Forms\Components\RichEditor::make('content')
                                             ->required()
                                             ->columnSpanFull()
-                                            ->fileAttachmentsDirectory('articles/images'), // Si permites subir imágenes dentro del editor
+                                            ->fileAttachmentsDirectory('articles/images'),
 
                                         Forms\Components\Textarea::make('excerpt')
                                             ->rows(3)
@@ -93,7 +94,7 @@ class ArticleResource extends Resource
                                 Section::make('Associations')
                                     ->schema([
                                         Forms\Components\Select::make('user_id')
-                                            ->relationship('author', 'name') // Usa la relación 'author' del modelo Article
+                                            ->relationship('author', 'name')
                                             ->searchable()
                                             ->preload()
                                             ->label('Author')
@@ -104,12 +105,27 @@ class ArticleResource extends Resource
                                             ->searchable()
                                             ->preload()
                                             ->required()
-                                            ->createOptionForm([ // Permite crear categorías al vuelo (opcional)
+                                            ->createOptionForm([
                                                 Forms\Components\TextInput::make('name')
                                                     ->required()
                                                     ->live(onBlur: true)
                                                     ->afterStateUpdated(fn (Forms\Set $set, $state) => $set('slug', Str::slug($state))),
                                                 Forms\Components\TextInput::make('slug')->required(),
+                                            ]),
+
+                                        Forms\Components\Select::make('tags')
+                                            ->relationship('tags', 'name')
+                                            ->multiple()
+                                            ->preload()
+                                            ->searchable()
+                                            ->label('Tags')
+                                            ->createOptionForm([
+                                                Forms\Components\TextInput::make('name')
+                                                    ->required()
+                                                    ->live(onBlur: true)
+                                                    ->afterStateUpdated(fn (Forms\Set $set, $state) => $set('slug', Str::slug($state))),
+                                                Forms\Components\TextInput::make('slug')
+                                                    ->required(),
                                             ]),
                                     ]),
                             ]),
@@ -123,7 +139,7 @@ class ArticleResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('featured_image_url')
                     ->label('Image')
-                    ->circular(), // O square() si prefieres
+                    ->circular(),
 
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
@@ -131,7 +147,6 @@ class ArticleResource extends Resource
                     ->weight('bold')
                     ->limit(30),
 
-                // Usamos notación de punto para acceder a relaciones: author.name
                 Tables\Columns\TextColumn::make('author.name')
                     ->label('Author')
                     ->searchable()
@@ -142,7 +157,7 @@ class ArticleResource extends Resource
                     ->label('Category')
                     ->searchable()
                     ->sortable()
-                    ->badge() // Se ve mejor como badge
+                    ->badge()
                     ->color('gray'),
 
                 Tables\Columns\TextColumn::make('status')
@@ -170,14 +185,12 @@ class ArticleResource extends Resource
             ->defaultSort('published_at', 'desc')
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
-                // Filtro rápido por estado
                 Tables\Filters\SelectFilter::make('status')
                     ->options([
                         'draft' => 'Draft',
                         'scheduled' => 'Scheduled',
                         'published' => 'Published',
                     ]),
-                // Filtro por categoría
                 Tables\Filters\SelectFilter::make('category')
                     ->relationship('category', 'name'),
             ])
@@ -197,8 +210,7 @@ class ArticleResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // Aquí agregaremos la relación de Tags más adelante si lo deseas
-            // RelationManagers\TagsRelationManager::class,
+            CommentsRelationManager::class,
         ];
     }
 
