@@ -93,26 +93,7 @@
 
         {{-- Sección de Comentarios (Placeholder por ahora) --}}
         @if($article->allows_comments)
-            <section id="comments" class="bg-white p-6 rounded-lg shadow-sm">
-                <h3 class="text-2xl font-bold text-gray-900 mb-6">Comentarios ({{ $article->comments->count() }})</h3>
-
-                {{-- Aquí iría el componente Livewire para el formulario de comentarios --}}
-                {{-- <livewire:article-comments :article="$article" /> --}}
-
-                <div class="space-y-6 mt-8">
-                     @forelse($article->comments as $comment)
-                        <div class="border-b border-gray-100 pb-6 last:border-0">
-                            <div class="flex items-center mb-2">
-                                <div class="font-bold text-gray-800 mr-2">{{ $comment->author_name }}</div>
-                                <div class="text-xs text-gray-500">{{ $comment->created_at->diffForHumans() }}</div>
-                            </div>
-                            <p class="text-gray-700">{{ $comment->content }}</p>
-                        </div>
-                    @empty
-                        <p class="text-gray-500 italic">Sé el primero en comentar esta noticia.</p>
-                    @endforelse
-                </div>
-            </section>
+            <livewire:article-comments :article="$article" />
         @endif
     </div>
 
