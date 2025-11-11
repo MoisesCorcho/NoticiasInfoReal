@@ -15,10 +15,23 @@ class TagFactory extends Factory
 
     public function definition(): array
     {
-        $name = $this->faker->unique()->word();
+        $name = $this->faker->unique()->randomElement([
+            'Elecciones 2025',
+            'Congreso',
+            'Inflación',
+            'Mercados Globales',
+            'Fútbol Femenino',
+            'LaLiga',
+            'Champions League',
+            'Tecnología Verde',
+            'Inteligencia Artificial',
+            'Ciencia y Salud',
+            'Arte Contemporáneo',
+            'Patrimonio Cultural',
+        ]);
 
         return [
-            'name' => ucfirst($name),
+            'name' => $name,
             'slug' => Str::slug($name),
         ];
     }
