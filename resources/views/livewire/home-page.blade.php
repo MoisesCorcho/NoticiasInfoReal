@@ -63,25 +63,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($latestArticles as $article)
-                <article class="bg-white rounded-lg shadow overflow-hidden hover:shadow-md transition">
-                    @if($article->featured_image_url)
-                        <a href="{{ route('article.show', $article->slug) }}">
-                            <img src="{{ Storage::url($article->featured_image_url) }}" class="w-full h-48 object-cover">
-                        </a>
-                    @endif
-                    <div class="p-4">
-                        <div class="flex items-center text-xs text-gray-500 mb-2">
-                            <span class="text-red-600 font-semibold mr-2">{{ $article->category->name ?? 'General' }}</span>
-                            <span>&bull; {{ $article->published_at->format('d M, Y') }}</span>
-                        </div>
-                        <h3 class="font-bold text-lg leading-snug mb-2">
-                            <a href="{{ route('article.show', $article->slug) }}" class="hover:text-red-700">
-                                {{ $article->title }}
-                            </a>
-                        </h3>
-                        <p class="text-gray-600 text-sm line-clamp-3">{{ $article->excerpt }}</p>
-                    </div>
-                </article>
+                <x-article-card :article="$article" />
             @endforeach
         </div>
     </section>
@@ -97,21 +79,12 @@
             </div>
             <div class="space-y-6">
                 @forelse($sportsArticles as $article)
-                    <div class="flex gap-4 items-start border-b border-gray-100 pb-4">
-                        @if($article->featured_image_url)
-                            <a href="{{ route('article.show', $article->slug) }}" class="shrink-0">
-                                <img src="{{ Storage::url($article->featured_image_url) }}" class="w-24 h-24 object-cover rounded">
-                            </a>
-                        @endif
-                        <div>
-                            <h4 class="font-bold text-md hover:text-red-700 leading-tight">
-                                <a href="{{ route('article.show', $article->slug) }}">
-                                    {{ $article->title }}
-                                </a>
-                            </h4>
-                             <p class="text-xs text-gray-500 mt-1">{{ $article->published_at->diffForHumans() }}</p>
-                        </div>
-                    </div>
+                    <x-article-list-item
+                        :article="$article"
+                        :meta="$article->published_at?->diffForHumans()"
+                        image-size="w-24 h-24"
+                        class="border-b border-gray-100 pb-4"
+                    />
                 @empty
                     <p class="text-gray-500">No hay noticias de deportes aún.</p>
                 @endforelse
@@ -127,21 +100,13 @@
             </div>
             <div class="space-y-6">
                  @forelse($regionArticles as $article)
-                    <div class="flex gap-4 items-start border-b border-gray-100 pb-4">
-                        @if($article->featured_image_url)
-                            <a href="{{ route('article.show', $article->slug) }}" class="shrink-0">
-                                <img src="{{ Storage::url($article->featured_image_url) }}" class="w-24 h-24 object-cover rounded">
-                            </a>
-                        @endif
-                        <div>
-                            <h4 class="font-bold text-md hover:text-blue-700 leading-tight">
-                                <a href="{{ route('article.show', $article->slug) }}">
-                                    {{ $article->title }}
-                                </a>
-                            </h4>
-                            <p class="text-xs text-gray-500 mt-1">{{ $article->published_at->diffForHumans() }}</p>
-                        </div>
-                    </div>
+                    <x-article-list-item
+                        :article="$article"
+                        :meta="$article->published_at?->diffForHumans()"
+                        image-size="w-24 h-24"
+                        link-class="hover:text-blue-700"
+                        class="border-b border-gray-100 pb-4"
+                    />
                 @empty
                     <p class="text-gray-500">No hay noticias regionales aún.</p>
                 @endforelse

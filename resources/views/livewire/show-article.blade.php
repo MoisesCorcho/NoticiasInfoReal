@@ -107,19 +107,13 @@
              <h4 class="text-lg font-bold text-gray-800 mb-6 uppercase border-b-2 border-red-600 pb-2 inline-block">Entradas Recientes</h4>
              <div class="space-y-4">
                  @foreach($recentArticles as $recent)
-                    <div class="flex gap-3 items-start">
-                        @if($recent->featured_image_url)
-                            <a href="{{ route('article.show', $recent->slug) }}" class="shrink-0">
-                                <img src="{{ Storage::url($recent->featured_image_url) }}" class="w-20 h-20 object-cover rounded">
-                            </a>
-                        @endif
-                        <div>
-                            <h5 class="font-bold text-sm leading-tight hover:text-red-700">
-                                <a href="{{ route('article.show', $recent->slug) }}">{{ $recent->title }}</a>
-                            </h5>
-                            <span class="text-xs text-gray-500 mt-1 block">{{ $recent->published_at->format('d M, Y') }}</span>
-                        </div>
-                    </div>
+                    <x-article-list-item
+                        :article="$recent"
+                        :meta="$recent->published_at?->format('d M, Y')"
+                        image-size="w-20 h-20"
+                        title-class="font-bold text-sm leading-tight hover:text-red-700"
+                        class="items-start gap-3"
+                    />
                  @endforeach
              </div>
         </div>

@@ -9,9 +9,7 @@
             <div class="flex gap-4">
                 <div class="shrink-0">
                     {{-- Avatar generado con las iniciales --}}
-                    <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase">
-                        {{ substr($comment->author_name, 0, 2) }}
-                    </div>
+                    <x-avatar-initials :name="$comment->author_name" />
                 </div>
                 <div class="flex-1 border-b border-gray-100 pb-6">
                     <div class="flex items-center justify-between mb-2">

@@ -11,7 +11,8 @@
 <body class="bg-gray-100 font-sans antialiased">
     <!-- Header / Navegación -->
     <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-4">
+        {{-- Usamos max-w-screen-xl en lugar de container para limitar el ancho en pantallas muy grandes --}}
+        <div class="max-w-screen-xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">
                 <div class="text-3xl font-bold text-red-700">El Notición</div>
                 <div class="hidden md:flex space-x-4 text-sm uppercase font-semibold text-gray-600">
@@ -25,13 +26,13 @@
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-6 min-h-screen">
+    <main class="max-w-screen-xl mx-auto px-4 py-6 min-h-screen">
         {{ $slot }}
     </main>
 
     <!-- Footer simple -->
     <footer class="bg-gray-900 text-white py-8 mt-12">
-        <div class="container mx-auto px-4 text-center">
+        <div class="max-w-screen-xl mx-auto px-4 text-center">
             <p>&copy; {{ date('Y') }} El Notición Clone. Todos los derechos reservados.</p>
         </div>
     </footer>

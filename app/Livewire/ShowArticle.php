@@ -28,7 +28,7 @@ class ShowArticle extends Component
         // Obtenemos artículos recientes para la barra lateral
         $recentArticles = Article::query()
             ->published()
-            ->where('id_article', '!=', $this->article->id_article) // Excluimos el actual
+            ->where('id_article', '!=', $this->article->id_article)
             ->latest('published_at')
             ->take(5)
             ->get();
@@ -46,6 +46,7 @@ class ShowArticle extends Component
             ->oldest('published_at')
             ->first();
 
+        // Puede que salga error linter por el title, pero se puede ignorar.
         return view('livewire.show-article', [
             'recentArticles' => $recentArticles,
             'previousArticle' => $previousArticle,
