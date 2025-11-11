@@ -4,6 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'El Notición Clone' }}</title>
+
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!-- Fuente opcional similar a noticias -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -18,5 +22,8 @@
 
     <!-- Footer simple -->
     <x-layouts.footer />
+
+    <!-- Swiper.js JS (al final del body) -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </body>
 </html>

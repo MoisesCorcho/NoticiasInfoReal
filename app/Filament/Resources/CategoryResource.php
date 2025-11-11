@@ -65,6 +65,25 @@ class CategoryResource extends Resource
                                     }
                                 },
                             ]),
+
+                        Forms\Components\Toggle::make('is_featured')
+                            ->label('Destacar en carrusel de portada')
+                            ->helperText('Solo una categoría puede estar destacada a la vez.')
+                            ->columnSpanFull()
+                            ->rules([
+                                // Regla de validación para asegurar que solo haya UN destacado
+                                fn (?Model $record): \Closure => function (string $attribute, $value, \Closure $fail) use ($record) {
+                                    if ($value) {
+                                        $query = Category::where('is_featured', true);
+                                        if ($record) {
+                                            $query->where('id_category', '!=', $record->getKey());
+                                        }
+                                        if ($query->exists()) {
+                                            $fail('Ya existe otra categoría destacada. Solo puede haber una.');
+                                        }
+                                    }
+                                },
+                            ]),
                     ])->columns(2),
             ]);
     }

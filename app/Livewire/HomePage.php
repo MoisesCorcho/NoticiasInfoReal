@@ -28,16 +28,25 @@ class HomePage extends Component
             ->take(6)
             ->get();
 
-        // 3. Secciones por categoría (Ejemplo: Deportes y Región)
-        // Usamos un método auxiliar para no repetir código
-        $sportsArticles = $this->getArticlesByCategory('deportes');
-        $regionArticles = $this->getArticlesByCategory('region'); // Asegúrate que el slug coincida con tu DB
+        $featuredCategory = Category::where('is_featured', true)->first();
+        $featuredCategoryArticles = [];
+
+        if ($featuredCategory) {
+            $featuredCategoryArticles = Article::query()
+                ->published()
+                ->where('category_id', $featuredCategory->id_category)
+                // ->orWhereIn('category_id', $featuredCategory->children->pluck('id_category')) // Opcional: incluir hijos
+                ->with('category')
+                ->latest('published_at')
+                ->take(10) // Tomamos 10 para el carrusel
+                ->get();
+        }
 
         return view('livewire.home-page', [
             'heroArticles' => $heroArticles,
             'latestArticles' => $latestArticles,
-            'sportsArticles' => $sportsArticles,
-            'regionArticles' => $regionArticles,
+            'featuredCategory' => $featuredCategory,
+            'featuredCategoryArticles' => $featuredCategoryArticles,
         ]);
     }
 

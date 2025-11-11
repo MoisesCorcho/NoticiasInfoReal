@@ -18,6 +18,7 @@ class Category extends Model
         'name',
         'slug',
         'parent_id',
+        'is_featured',
     ];
 
     public function articles(): HasMany
