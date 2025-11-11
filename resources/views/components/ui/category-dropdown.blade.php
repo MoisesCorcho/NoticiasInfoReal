@@ -20,7 +20,7 @@
                 @if ($category->children->isNotEmpty())
                     <div x-show="open" x-collapse class="mt-1 border-l-2 border-gray-200 ml-2">
                         {{-- Llamada recursiva al mismo componente --}}
-                        <x-category-dropdown :categories="$category->children" />
+                        <x-ui.category-dropdown :categories="$category->children" />
                     </div>
                 @endif
             </div>

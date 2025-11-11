@@ -1,7 +1,7 @@
 <div class="bg-white p-6 rounded-lg shadow-sm">
     <h4 class="text-lg font-bold text-gray-800 mb-4 uppercase border-b-2 border-red-600 pb-2 inline-block">Buscar</h4>
     <form wire:submit="search" class="flex">
-        <x-text-input 
+        <x-ui.text-input 
             type="text" 
             wire:model="query" 
             placeholder="Buscar noticias..." 

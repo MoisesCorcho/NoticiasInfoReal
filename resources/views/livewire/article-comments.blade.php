@@ -9,7 +9,7 @@
             <div class="flex gap-4">
                 <div class="shrink-0">
                     {{-- Avatar generado con las iniciales --}}
-                    <x-avatar-initials :name="$comment->author_name" />
+                    <x-ui.avatar-initials :name="$comment->author_name" />
                 </div>
                 <div class="flex-1 border-b border-gray-100 pb-6">
                     <div class="flex items-center justify-between mb-2">
@@ -53,7 +53,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
                     <label for="author_name" class="block text-sm font-medium text-gray-700 mb-1">Nombre *</label>
-                    <x-text-input 
+                    <x-ui.text-input 
                         type="text" 
                         wire:model="author_name" 
                         id="author_name"
@@ -63,7 +63,7 @@
                 </div>
                 <div>
                     <label for="author_email" class="block text-sm font-medium text-gray-700 mb-1">Email * (no será publicado)</label>
-                    <x-text-input 
+                    <x-ui.text-input 
                         type="email" 
                         wire:model="author_email" 
                         id="author_email"
@@ -75,7 +75,7 @@
 
             <div class="mb-4">
                 <label for="content" class="block text-sm font-medium text-gray-700 mb-1">Comentario *</label>
-                <x-textarea 
+                <x-ui.textarea 
                     wire:model="content" 
                     id="content" 
                     rows="4"

@@ -125,7 +125,7 @@
              <h4 class="text-lg font-bold text-gray-800 mb-6 uppercase border-b-2 border-red-600 pb-2 inline-block">Entradas Recientes</h4>
              <div class="space-y-4">
                  @foreach($recentArticles as $recent)
-                    <x-article-list-item
+                    <x-articles.article-list-item
                         :article="$recent"
                         :meta="$recent->published_at?->format('d M, Y')"
                         image-size="w-20 h-20"

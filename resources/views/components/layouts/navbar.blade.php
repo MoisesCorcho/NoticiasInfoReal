@@ -56,7 +56,7 @@
             {{-- Reutilizamos el SearchWidget aquí, pero quizás necesitemos una versión simplificada sin el título h4 --}}
             {{-- Para hacerlo rápido y limpio, incrustamos el formulario directamente usando el componente Livewire si lo soporta, o un formulario estándar GET --}}
             <form action="{{ route('search') }}" method="GET" class="flex">
-                <x-text-input
+                <x-ui.text-input
                     type="text"
                     name="q"
                     placeholder="¿Qué estás buscando?"
@@ -113,7 +113,7 @@
             </div>
 
             <div class="mt-4 px-4">
-                <x-category-dropdown :categories="$rootCategories" />
+                <x-ui.category-dropdown :categories="$rootCategories" />
             </div>
         </div>
     </div>

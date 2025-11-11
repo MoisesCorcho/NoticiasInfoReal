@@ -15,6 +15,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Filament\Notifications\Notification;
 
 class CategoryResource extends Resource
 {
@@ -126,6 +128,43 @@ class CategoryResource extends Resource
                     ->badge()
                     ->color(fn (int $state): string => $state > 0 ? 'success' : 'gray')
                     ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\ToggleColumn::make('is_featured')
+                    ->label('Destacada')
+                    ->sortable()
+                    ->updateStateUsing(function (Model $record, $state): bool {
+                        // $state es el nuevo valor (true o false)
+                        try {
+                            DB::transaction(function () use ($record, $state) {
+                                if ($state === true) {
+                                    // 1. Si se activa esta, desactivar todas las demás
+                                    Category::where('id_category', '!=', $record->id_category)
+                                        ->where('is_featured', true)
+                                        ->update(['is_featured' => false]);
+                                }
+                                
+                                // 2. Actualizar el registro actual
+                                $record->update(['is_featured' => $state]);
+                            });
+                            
+                            Notification::make()
+                                ->title('Categoría destacada actualizada')
+                                ->success()
+                                ->send();
+
+                            return $state;
+
+                        } catch (\Exception $e) {
+                            Notification::make()
+                                ->title('Error al actualizar')
+                                ->body('No se pudo actualizar la categoría.')
+                                ->danger()
+                                ->send();
+                            
+                            // Revertir el estado visual del toggle en caso de error
+                            return !$state; 
+                        }
+                    }),
 
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
