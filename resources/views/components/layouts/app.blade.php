@@ -10,13 +10,13 @@
 </head>
 <body class="bg-gray-100 font-sans antialiased">
     <!-- Header / Navegación -->
-    <x-navbar />
+    <x-layouts.navbar />
 
     <main class="max-w-screen-xl mx-auto px-4 py-6 min-h-screen">
         {{ $slot }}
     </main>
 
     <!-- Footer simple -->
-    <x-footer />
+    <x-layouts.footer />
 </body>
 </html>

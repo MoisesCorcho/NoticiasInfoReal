@@ -72,20 +72,38 @@
         </article>
 
         {{-- Navegación entre Artículos --}}
-        <nav class="flex justify-between items-center mb-8 bg-white p-4 rounded-lg shadow-sm">
-            <div class="w-1/2 pr-4 border-r border-gray-100">
+        {{-- Navegación entre Artículos --}}
+        <nav class="flex justify-between items-stretch mb-8 gap-4">
+            {{-- Artículo Anterior --}}
+            <div class="w-1/2">
                 @if($previousArticle)
-                    <span class="block text-xs text-gray-500 uppercase mb-1">&larr; Anterior</span>
-                    <a href="{{ route('article.show', $previousArticle->slug) }}" class="font-bold text-gray-800 hover:text-red-700 line-clamp-2">
-                        {{ $previousArticle->title }}
+                    <a href="{{ route('article.show', $previousArticle->slug) }}" class="flex items-center bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition h-full group">
+                        @if($previousArticle->featured_image_url)
+                            <img src="{{ Storage::url($previousArticle->featured_image_url) }}" alt="{{ $previousArticle->title }}" class="w-20 h-20 object-cover rounded-md mr-4 shrink-0 hidden sm:block">
+                        @endif
+                        <div>
+                            <span class="block text-xs text-gray-500 uppercase mb-1 group-hover:text-red-600 transition-colors">&larr; Anterior</span>
+                            <h4 class="font-bold text-gray-800 leading-tight line-clamp-2 group-hover:text-red-700 transition-colors">
+                                {{ $previousArticle->title }}
+                            </h4>
+                        </div>
                     </a>
                 @endif
             </div>
-            <div class="w-1/2 pl-4 text-right">
+
+            {{-- Artículo Siguiente --}}
+            <div class="w-1/2">
                 @if($nextArticle)
-                    <span class="block text-xs text-gray-500 uppercase mb-1">Siguiente &rarr;</span>
-                    <a href="{{ route('article.show', $nextArticle->slug) }}" class="font-bold text-gray-800 hover:text-red-700 line-clamp-2">
-                        {{ $nextArticle->title }}
+                    <a href="{{ route('article.show', $nextArticle->slug) }}" class="flex items-center justify-end text-right bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition h-full group">
+                        <div>
+                            <span class="block text-xs text-gray-500 uppercase mb-1 group-hover:text-red-600 transition-colors">Siguiente &rarr;</span>
+                            <h4 class="font-bold text-gray-800 leading-tight line-clamp-2 group-hover:text-red-700 transition-colors">
+                                {{ $nextArticle->title }}
+                            </h4>
+                        </div>
+                        @if($nextArticle->featured_image_url)
+                            <img src="{{ Storage::url($nextArticle->featured_image_url) }}" alt="{{ $nextArticle->title }}" class="w-20 h-20 object-cover rounded-md ml-4 shrink-0 hidden sm:block">
+                        @endif
                     </a>
                 @endif
             </div>

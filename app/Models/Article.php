@@ -51,6 +51,12 @@ class Article extends Model
         $query->whereNotNull('featured_image_url');
     }
 
+    #[Scope]
+    public function inCategories(Builder $query, array $categoryIds): void
+    {
+        $query->whereIn('category_id', $categoryIds);
+    }
+
 
     // Relación: Pertenece a un autor (User)
     public function author(): BelongsTo
