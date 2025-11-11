@@ -2,7 +2,7 @@
     'article',
     'meta' => null,
     'imageSize' => 'w-24 h-24',
-    'titleClass' => 'font-bold text-md hover:text-red-700 leading-tight',
+    'titleClass' => 'font-bold text-md text-white hover:text-[#d71935] leading-tight',
     'linkClass' => '',
 ])
 
@@ -15,7 +15,10 @@
 <div {{ $attributes->merge(['class' => 'flex gap-4 items-start']) }}>
     @if($imageUrl)
         <a href="{{ route('article.show', $article->slug) }}" class="shrink-0">
-            <img src="{{ $imageUrl }}" alt="{{ $article->title }}" class="{{ $imageSize }} object-cover rounded">
+            <img src="{{ $imageUrl }}" 
+                 alt="{{ $article->title }}" 
+                 onerror="this.src='https://placehold.co/100x100/18181C/333233?text=...'"
+                 class="{{ $imageSize }} object-cover rounded">
         </a>
     @endif
     <div>
@@ -31,4 +34,3 @@
         @endif
     </div>
 </div>
-

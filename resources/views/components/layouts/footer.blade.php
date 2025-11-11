@@ -7,7 +7,7 @@
         ->get();
 @endphp
 
-<footer class="bg-gray-900 text-gray-300 py-12 mt-12">
+<footer class="bg-[#18181C] text-gray-300 py-12 mt-12">
     <div class="max-w-screen-xl mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             {{-- Columna 1: Sobre Nosotros --}}
@@ -35,9 +35,9 @@
                         </svg>
                     </a>
                      <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="YouTube">
-                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                         <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                        </svg>
+                         </svg>
                     </a>
                 </div>
             </div>
@@ -71,8 +71,10 @@
             </div>
         </div>
 
-        {{-- Barra inferior de Copyright --}}
-        <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
+        {{-- 
+            Barra inferior de Copyright
+        --}}
+        <div class="border-t border-white/10 pt-8 text-center text-sm text-gray-500">
             <p>&copy; {{ date('Y') }} {{ config('app.name') }}. Todos los derechos reservados.</p>
             <p class="mt-2">Desarrollado con ❤️ para el mejor periodismo.</p>
         </div>

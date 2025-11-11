@@ -12,7 +12,7 @@
     <!-- Fuente opcional similar a noticias -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-100 font-sans antialiased">
+<body class="bg-[#101014] text-gray-300 font-sans antialiased">
     <!-- Header / Navegación -->
     <x-layouts.navbar />
 
@@ -23,7 +23,7 @@
     <!-- Footer simple -->
     <x-layouts.footer />
 
-    <!-- Swiper.js JS (al final del body) -->
+    <!-- Swiper.js JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </body>
 </html>

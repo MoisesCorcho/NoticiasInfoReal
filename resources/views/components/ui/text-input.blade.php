@@ -3,6 +3,6 @@
 <input
     {{ $disabled ? 'disabled' : '' }}
     {!! $attributes->merge([
-        'class' => 'border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-md shadow-sm px-4 py-2.5 text-base'
+        'class' => 'bg-[#18181C] text-gray-300 border-gray-700 focus:border-[#d71935] focus:ring-[#d71935] rounded-md px-4 py-2.5 text-base placeholder:text-gray-500'
     ]) !!}
 >

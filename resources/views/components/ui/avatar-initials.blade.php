@@ -1,8 +1,8 @@
 @props([
     'name',
     'classes' => 'w-10 h-10 text-base',
-    'background' => 'bg-gray-200',
-    'textColor' => 'text-gray-500',
+    'background' => 'bg-[#333233]',
+    'textColor' => 'text-gray-300',
 ])
 
 @php
@@ -18,4 +18,3 @@
 ]) }}>
     {{ $initials }}
 </div>
-

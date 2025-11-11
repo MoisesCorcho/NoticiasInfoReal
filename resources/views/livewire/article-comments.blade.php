@@ -1,5 +1,5 @@
-<section id="comments" class="bg-white p-6 rounded-lg shadow-sm scroll-mt-20">
-    <h3 class="text-2xl font-bold text-gray-900 mb-8">
+<section id="comments" class="bg-[#18181C] p-6 rounded-lg border border-white/10 scroll-mt-20">
+    <h3 class="text-2xl font-bold text-white mb-8">
         Comentarios ({{ $article->comments()->where('status', 'approved')->count() }})
     </h3>
 
@@ -8,26 +8,25 @@
         @forelse($comments as $comment)
             <div class="flex gap-4">
                 <div class="shrink-0">
-                    {{-- Avatar generado con las iniciales --}}
+                    {{-- Avatar (asumimos que x-ui.avatar-initials se ve bien) --}}
                     <x-ui.avatar-initials :name="$comment->author_name" />
                 </div>
-                <div class="flex-1 border-b border-gray-100 pb-6">
+                <div class="flex-1 border-b border-white/10 pb-6">
                     <div class="flex items-center justify-between mb-2">
-                        <h5 class="font-bold text-gray-900">
+                        <h5 class="font-bold text-white">
                             {{ $comment->author_name }}
                         </h5>
-                        <span class="text-xs text-gray-500">
+                        <span class="text-xs text-gray-400">
                             {{ $comment->created_at->diffForHumans() }}
                         </span>
                     </div>
-                    <div class="prose prose-sm max-w-none text-gray-700">
-                        {{-- nl2br permite que los saltos de línea en el textarea se vean en el HTML --}}
+                    <div class="prose prose-sm max-w-none prose-invert text-gray-300">
                         {!! nl2br(e($comment->content)) !!}
                     </div>
                 </div>
             </div>
         @empty
-            <p class="text-gray-500 italic text-center py-4">
+            <p class="text-gray-400 italic text-center py-4">
                 Aún no hay comentarios. ¡Sé el primero en opinar!
             </p>
         @endforelse
@@ -39,12 +38,12 @@
     </div>
 
     {{-- FORMULARIO DE COMENTARIOS --}}
-    <div class="bg-gray-50 p-6 rounded-lg border border-gray-100">
-        <h4 class="text-lg font-bold text-gray-800 mb-4">Deja tu opinión</h4>
+    <div class="bg-[#333233] p-6 rounded-lg border border-white/10">
+        <h4 class="text-lg font-bold text-white mb-4">Deja tu opinión</h4>
 
         {{-- Mensaje de éxito --}}
         @if (session()->has('success'))
-            <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-lg border border-green-200 text-sm">
+            <div class="mb-4 p-4 bg-green-900/50 text-green-300 rounded-lg border border-green-700 text-sm">
                 {{ session('success') }}
             </div>
         @endif
@@ -52,7 +51,7 @@
         <form wire:submit="save">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                    <label for="author_name" class="block text-sm font-medium text-gray-700 mb-1">Nombre *</label>
+                    <label for="author_name" class="block text-sm font-medium text-gray-300 mb-1">Nombre *</label>
                     <x-ui.text-input 
                         type="text" 
                         wire:model="author_name" 
@@ -62,7 +61,7 @@
                     @error('author_name') <span class="text-red-600 text-xs mt-1">{{ $message }}</span> @enderror
                 </div>
                 <div>
-                    <label for="author_email" class="block text-sm font-medium text-gray-700 mb-1">Email * (no será publicado)</label>
+                    <label for="author_email" class="block text-sm font-medium text-gray-300 mb-1">Email * (no será publicado)</label>
                     <x-ui.text-input 
                         type="email" 
                         wire:model="author_email" 
@@ -74,7 +73,7 @@
             </div>
 
             <div class="mb-4">
-                <label for="content" class="block text-sm font-medium text-gray-700 mb-1">Comentario *</label>
+                <label for="content" class="block text-sm font-medium text-gray-300 mb-1">Comentario *</label>
                 <x-ui.textarea 
                     wire:model="content" 
                     id="content" 
@@ -86,7 +85,7 @@
             </div>
 
             <button type="submit"
-                    class="bg-red-600 text-white px-6 py-2 rounded-md font-bold uppercase text-sm hover:bg-red-700 transition disabled:opacity-50"
+                    class="bg-[#d71935] text-white px-6 py-2 rounded-md font-bold uppercase text-sm hover:bg-red-700 transition disabled:opacity-50"
                     wire:loading.attr="disabled">
                 <span wire:loading.remove>Publicar Comentario</span>
                 <span wire:loading>Enviando...</span>

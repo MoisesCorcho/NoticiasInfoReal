@@ -5,11 +5,11 @@
     @endif
 
     {{-- SECCIÓN 2: ÚLTIMAS NOTICIAS (Grid estándar) --}}
-    <section id="latest-news">
+    @if ($latestArticles->isNotEmpty())
         <x-home.latest-news :articles="$latestArticles" />
-    </section>
+    @endif
 
-    {{-- SECCIÓN 3: CATEGORÍAS ESPECÍFICAS (Dos columnas) --}}
+    {{-- SECCIÓN 3: CATEGORÍAS ESPECÍFICAS (Carrusel) --}}
     @if ($featuredCategory)
         <x-home.category-carousel :category="$featuredCategory" :articles="$featuredCategoryArticles" />
     @endif

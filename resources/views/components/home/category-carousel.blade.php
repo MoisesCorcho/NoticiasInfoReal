@@ -20,40 +20,43 @@
 }" x-init="initSwiper()">
 
     {{-- Título de la sección (dinámico) --}}
-    <div class="flex items-center justify-between mb-6 border-b-2" style="border-color: #009961;">
-        <h2 class="text-xl font-bold uppercase bg-[#009961] text-white px-4 py-1 inline-block">
+    <div class="flex items-center justify-between mb-6 border-b border-white/10">
+        <h2 class="text-xl font-bold uppercase bg-[#d71935] text-white px-4 py-1 inline-block rounded-t-md">
             {{ $category->name }}
         </h2>
     </div>
 
     {{-- Contenedor del Carrusel --}}
-    <div class="relative bg-gray-900 p-4 rounded-lg">
+    <div class="relative bg-[#18181C] p-4 rounded-lg border border-white/10">
         <div class="swiper" x-ref="carousel">
             <div class="swiper-wrapper">
                 {{-- Iteramos sobre los artículos (¡nota que ahora usamos $articles!) --}}
                 @forelse($articles as $article)
                     <div class="swiper-slide group relative aspect-[3/4] overflow-hidden rounded-md">
-                        <img src="{{ Storage::url($article->featured_image_url) }}"
-                             alt="{{ $article->title }}"
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                        
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent">
-                            <div class="absolute bottom-0 p-3 text-white">
-                                <span class="inline-block bg-[#009961] text-white text-[10px] font-bold px-1.5 py-0.5 rounded mb-1">
-                                    {{ $article->category->name }}
-                                </span>
-                                <h4 class="font-bold text-sm leading-tight line-clamp-2">
-                                    <a href="{{ route('article.show', $article->slug) }}" class="hover:underline">
-                                        {{ $article->title }}
-                                    </a>
-                                </h4>
+                        <a href="{{ route('article.show', $article->slug) }}" class="block w-full h-full">
+                            <img src="{{ $article->featured_image_url ? Storage::url($article->featured_image_url) : 'https://placehold.co/300x400/18181C/333233?text=Art%C3%ADculo' }}"
+                                 alt="{{ $article->title }}"
+                                 onerror="this.src='https://placehold.co/300x400/18181C/333233?text=Error'"
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent">
+                                <div class="absolute bottom-0 p-3 text-white">
+                                    <span class="inline-block bg-[#d71935] text-white text-[10px] font-bold px-1.5 py-0.5 rounded mb-1">
+                                        {{ $article->category->name }}
+                                    </span>
+                                    <h4 class="font-bold text-sm leading-tight line-clamp-2">
+                                        <span class="hover:underline">
+                                            {{ $article->title }}
+                                        </span>
+                                    </h4>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 @empty
                     <div class="swiper-slide">
-                        <div class="aspect-[3/4] flex items-center justify-center text-gray-400">
-                            No hay noticias en esta categoría.
+                        <div class="aspect-[3/4] flex items-center justify-center text-gray-500 bg-[#101014] rounded-md">
+                            No hay noticias.
                         </div>
                     </div>
                 @endforelse
@@ -62,16 +65,16 @@
 
         {{-- Botones de Navegación --}}
         <button x-ref="prev"
-            class="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-white/70 rounded-full shadow-md hover:bg-white transition ml-2">
+                class="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#333233] text-white rounded-full shadow-md hover:bg-[#d71935] transition">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                stroke="currentColor" class="w-5 h-5 text-gray-800">
+                 stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
             </svg>
         </button>
         <button x-ref="next"
-            class="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-white/70 rounded-full shadow-md hover:bg-white transition mr-2">
+                class="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#333233] text-white rounded-full shadow-md hover:bg-[#d71935] transition">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                stroke="currentColor" class="w-5 h-5 text-gray-800">
+                 stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
             </svg>
         </button>
