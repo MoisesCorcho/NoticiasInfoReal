@@ -51,6 +51,6 @@ class ShowArticle extends Component
             'recentArticles' => $recentArticles,
             'previousArticle' => $previousArticle,
             'nextArticle' => $nextArticle,
-        ])->title($this->article->title . ' - El Notición'); // Establece el título de la página
+        ])->title($this->article->title . ' - '. config('app.name')); // Establece el título de la página
     }
 }

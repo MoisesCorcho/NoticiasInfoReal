@@ -39,7 +39,7 @@ class CategoryArticles extends Component
         // Puede que salga error linter por el title, pero se puede ignorar.
         return view('livewire.category-articles', [
             'articles' => $articles,
-        ])->with('title', $this->category->name . ' - El Notición');
+        ])->with('title', $this->category->name . ' - '. config('app.name'));
     }
 
     /**

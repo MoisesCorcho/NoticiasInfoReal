@@ -12,7 +12,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             {{-- Columna 1: Sobre Nosotros --}}
             <div class="col-span-1 md:col-span-2">
-                <h2 class="text-white text-2xl font-bold mb-4">El Notición</h2>
+                <h2 class="text-white text-2xl font-bold mb-4">{{ config('app.name') }}</h2>
                 <p class="text-sm leading-relaxed mb-4">
                     Somos tu fuente confiable de noticias regionales, nacionales e internacionales. Comprometidos con la verdad y el periodismo de calidad desde Córdoba para el mundo.
                 </p>
@@ -73,7 +73,7 @@
 
         {{-- Barra inferior de Copyright --}}
         <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
-            <p>&copy; {{ date('Y') }} El Notición. Todos los derechos reservados.</p>
+            <p>&copy; {{ date('Y') }} {{ config('app.name') }}. Todos los derechos reservados.</p>
             <p class="mt-2">Desarrollado con ❤️ para el mejor periodismo.</p>
         </div>
     </div>
