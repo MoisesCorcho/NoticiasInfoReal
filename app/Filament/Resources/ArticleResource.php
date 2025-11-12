@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ArticleResource\Pages;
 use App\Models\Article;
+use App\Models\Category;
+use App\Models\Tag;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Group;
@@ -116,7 +118,8 @@ class ArticleResource extends Resource
                                                     ->afterStateUpdated(fn (Forms\Set $set, $state) => $set('slug', Str::slug($state))),
                                                 Forms\Components\TextInput::make('slug')
                                                     ->label('Slug')
-                                                    ->required(),
+                                                    ->required()
+                                                    ->unique(Category::class, 'slug'),
                                             ]),
 
                                         Forms\Components\Select::make('tags')
@@ -133,7 +136,8 @@ class ArticleResource extends Resource
                                                     ->afterStateUpdated(fn (Forms\Set $set, $state) => $set('slug', Str::slug($state))),
                                                 Forms\Components\TextInput::make('slug')
                                                     ->label('Slug')
-                                                    ->required(),
+                                                    ->required()
+                                                    ->unique(Tag::class, 'slug'),
                                             ]),
                                     ]),
                             ]),

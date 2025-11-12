@@ -90,19 +90,19 @@ class CategoryResource extends Resource
                     ->color('info')
                     ->placeholder('—'),
 
+                Tables\Columns\TextColumn::make('articles_count')
+                    ->label('Artículos en categoría')
+                    ->counts('articles')
+                    ->badge()
+                    ->color('primary')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('children_count')
                     ->counts('children')
                     ->label('Hijos directos')
                     ->badge()
                     ->color('primary')
                     ->sortable(),
-
-                Tables\Columns\TextColumn::make('children.name')
-                    ->label('Lista de hijos')
-                    ->badge()
-                    ->separator(',') // Separa los nombres con comas si no usas badges, o crea badges individuales
-                    ->limitList(3)   // Muestra solo los primeros 3 y luego "+X more"
-                    ->color('gray'),
 
                 // Conteo total de descendientes (recursivo)
                 Tables\Columns\TextColumn::make('descendants_count')
@@ -111,11 +111,20 @@ class CategoryResource extends Resource
                     ->badge()
                     ->color(fn (int $state): string => $state > 0 ? 'success' : 'gray')
                     ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\TextColumn::make('children.name')
+                    ->label('Lista de hijos')
+                    ->badge()
+                    ->separator(',') // Separa los nombres con comas si no usas badges, o crea badges individuales
+                    ->limitList(3)   // Muestra solo los primeros 3 y luego "+X more"
+                    ->color('gray'),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('Actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
             ])
             ->defaultSort('name', 'asc')
             ->filters([
