@@ -1,59 +1,182 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## NoticiasProject
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Plataforma de noticias construida con **Laravel 12**, **Filament v3** y **Livewire**.  
+El proyecto ofrece un frontend estilo revista y un panel administrativo completo para gestionar artículos, categorías, secciones destacadas y comentarios.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 📰 Características principales
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Gestión de artículos** con editor enriquecido, imagen destacada, etiquetas y control de visibilidad (`Publicado`, `Programado`, `Borrador`).
+- **Reglas de publicación**:
+  - Un artículo se muestra en el sitio público solo si su `status` es `published`.
+  - La fecha `published_at` debe ser igual o anterior al momento actual.
+  - Los comentarios solo se permiten cuando `allows_comments` está activo.
+- **Jerarquía de categorías** con soporte para categorías padre / hijo y contador automático de artículos asociados.
+- **Secciones de portada configurables** (`grid`, `carousel`, `magazine`) para controlar la composición de la página principal.
+- **Moderación de comentarios** desde el panel de Filament con estados (`Aprobado`, `Pendiente`, `Spam`).
+- **Protección al eliminar**: no es posible borrar una categoría que todavía tiene artículos relacionados.
+- **Localización completa en español** utilizando [`laravel-lang`](https://laravel-lang.com/packages-common.html).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+### 🧱 Arquitectura y tecnologías
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- **Backend**: Laravel 12, PHP 8.2+, SQLite/MySQL/PostgreSQL (configurable).
+- **Panel administrativo**: Filament v3 con componentes personalizados y Livewire.
+- **Frontend**: Blade + Livewire, Tailwind CSS y Vite; carruseles con Swiper.js.
+- **Base de datos**: modelos `Article`, `Category`, `Comment`, `HomepageSection`, `Tag`, `User`.
+- **Internacionalización**: `laravel-lang/common` + `lang:update` para mantener traducciones.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+### 📦 Requisitos previos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- PHP 8.2 o superior con las extensiones de Laravel.
+- Composer 2.x.
+- Node.js 18.x o superior y npm.
+- Una base de datos (SQLite por defecto, configurable).
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 🚀 Instalación y puesta en marcha
 
-## Contributing
+1. Clona el repositorio:
+   ```bash
+   git clone <URL_DEL_REPO>
+   cd NoticiasProject
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. Instala dependencias PHP y JS:
+   ```bash
+   composer install
+   npm install
+   ```
 
-## Code of Conduct
+3. Copia el archivo de entorno y genera la clave de la app:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4. Configura tu base de datos en `.env` (por ejemplo `DB_CONNECTION=sqlite` y apunta `DB_DATABASE` al archivo deseado).
 
-## Security Vulnerabilities
+5. Ejecuta migraciones y seeders iniciales:
+   ```bash
+   php artisan migrate --seed
+   ```
+   - El seeder crea un usuario administrador por defecto `admin@admin.com` / `password`.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+6. Crea el enlace simbólico de storage:
+   ```bash
+   php artisan storage:link
+   ```
 
-## License
+7. Compila los assets:
+   ```bash
+   npm run dev   # para entorno de desarrollo
+   # o
+   npm run build # para producción
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+8. Lanza el servidor de desarrollo:
+   ```bash
+   php artisan serve
+   ```
+
+Accede al frontend en `http://localhost:8000` y al panel admin en `http://localhost:8000/admin`.
+
+---
+
+### 🌐 Localización en español
+
+El proyecto incluye traducciones actualizadas mediante `laravel-lang/common`.  
+Después de instalar nuevas dependencias ejecuta:
+```bash
+php artisan lang:update
+```
+
+También se recomienda establecer en `config/app.php`:
+```php
+'locale' => 'es',
+'fallback_locale' => 'es',
+'faker_locale' => 'es_ES',
+```
+
+En `config/filament.php` asegúrate de tener:
+```php
+'locales' => ['es'],
+'default_locale' => 'es',
+```
+
+---
+
+### 🧭 Flujo de trabajo en el panel de administración
+
+#### Artículos
+- Crear/editar desde **Contenido → Artículos**.
+- Definir título, slug (generado automáticamente al crear), contenido, resumen y metadatos.
+- Relacionar con un autor, categoría principal y etiquetas.
+- Controlar si admite comentarios y cuándo debe ser visible mediante el estado y la fecha de publicación.
+
+#### Categorías
+- Gestión jerárquica: asigna una categoría padre para crear árboles.
+- Los contadores muestran cuántos artículos y subcategorías directas tiene cada nodo.
+- No se pueden eliminar categorías que tengan artículos vinculados.
+
+#### Secciones de portada
+- Definen qué categorías aparecen en la página principal y con qué layout (`grid`, `carousel`, `magazine`).
+- Pueden personalizar título público, orden de aparición y visibilidad.
+
+#### Comentarios
+- Moderación desde el relation manager en Artículos (aprobar, marcar como spam, etc.).
+
+---
+
+### 📰 Renderizado del sitio público
+
+- **Home** (`/`): Livewire arma la portada combinando:
+  - Sección principal (hero) con la noticia destacada más reciente.
+  - Listado de últimas noticias.
+  - Carruseles y rejillas definidos en `HomepageSection`.
+- **Categorías** (`/categoria/{slug}`): muestra artículos publicados de la categoría seleccionada.
+- **Artículos** (`/articulo/{slug}`): detalle del artículo con contenido, breadcrumbs, etiquetas y bloque de comentarios (si están habilitados).
+- **Búsqueda** (`/buscar?q=`): resultados filtrados en función del término ingresado.
+
+Recuerda: solo se listan artículos `published` cuya fecha `published_at` es pasada o actual. Los artículos `scheduled` se ocultan hasta que se alcance su fecha; los `draft` únicamente se ven dentro de Filament.
+
+---
+
+### 🧪 Tests y herramientas útiles
+
+- Ejecutar suite de tests:
+  ```bash
+  php artisan test
+  ```
+- Formateo/Lint (opcional):
+  ```bash
+  ./vendor/bin/pint
+  ```
+- Actualizar traducciones:
+  ```bash
+  php artisan lang:update
+  ```
+
+---
+
+### 🛠 Troubleshooting
+
+- **Categoría con artículos**: no podrás eliminarla hasta reasignar o borrar los artículos relacionados; el panel mostrará una notificación.
+- **Assets faltantes**: asegúrate de haber corrido `npm run dev` y `php artisan storage:link`.
+- **Traducciones**: si notas textos en inglés, limpia cachés (`php artisan config:clear && php artisan view:clear`) y vuelve a ejecutar `php artisan lang:update`.
+
+---
+
+### 📄 Licencia
+
+Este proyecto se distribuye bajo la licencia que definas para tu repositorio (añade la sección correspondiente si aplica).
+
+---
+
+¿Dudas o sugerencias? Abre un issue en el repositorio. ¡Disfruta construyendo con NoticiasProject!
+
