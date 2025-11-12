@@ -36,68 +36,74 @@ class ArticleResource extends Resource
                         Group::make()
                             ->columnSpan(2)
                             ->schema([
-                                Section::make('Article Content')
-                                    ->description('Write the main content of your article here.')
+                                Section::make('Contenido del artículo')
+                                    ->description('Redacta el contenido principal de la noticia.')
                                     ->schema([
                                         Forms\Components\TextInput::make('title')
+                                            ->label('Título')
                                             ->required()
                                             ->live(onBlur: true) // Genera el slug cuando el usuario termina de escribir
                                             ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
                                         Forms\Components\TextInput::make('slug')
+                                            ->label('Slug')
                                             ->required()
                                             ->unique(ignoreRecord: true)
                                             ->disabled() // Usualmente el slug no se debe editar manualmente a menos que sea necesario
                                             ->dehydrated(), // Asegura que se envíe aunque esté disabled
 
                                         Forms\Components\RichEditor::make('content')
+                                            ->label('Contenido')
                                             ->required()
                                             ->columnSpanFull()
                                             ->fileAttachmentsDirectory('articles/images'),
 
                                         Forms\Components\Textarea::make('excerpt')
+                                            ->label('Resumen')
                                             ->rows(3)
                                             ->columnSpanFull()
-                                            ->helperText('A short summary for SEO and list views.'),
+                                            ->helperText('Resumen corto para SEO y listados.'),
                                     ]),
                             ]),
 
-                        // --- BARRA LATERAL (Ocupa 1 de 3 espacios) ---
+                        // --- BARRA LATERAL (ocupa 1 de 3 columnas) ---
                         Group::make()
                             ->columnSpan(1)
                             ->schema([
-                                Section::make('Metadata')
+                                Section::make('Metadatos')
                                     ->schema([
                                         Forms\Components\FileUpload::make('featured_image_url')
-                                            ->label('Featured Image')
+                                            ->label('Imagen destacada')
                                             ->image()
                                             ->directory('articles/featured')
                                             ->imageEditor(),
 
                                         Forms\Components\Select::make('status')
+                                            ->label('Estado')
                                             ->options([
-                                                'draft' => 'Draft',
-                                                'scheduled' => 'Scheduled',
-                                                'published' => 'Published',
+                                                'draft' => 'Borrador',
+                                                'scheduled' => 'Programado',
+                                                'published' => 'Publicado',
                                             ])
                                             ->required()
                                             ->native(false),
 
                                         Forms\Components\DateTimePicker::make('published_at')
+                                            ->label('Fecha de publicación')
                                             ->native(false),
 
                                         Forms\Components\Toggle::make('allows_comments')
-                                            ->label('Allow Comments')
+                                            ->label('Permitir comentarios')
                                             ->default(true),
                                     ]),
 
-                                Section::make('Associations')
+                                Section::make('Asociaciones')
                                     ->schema([
                                         Forms\Components\Select::make('user_id')
                                             ->relationship('author', 'name')
                                             ->searchable()
                                             ->preload()
-                                            ->label('Author')
+                                            ->label('Autor')
                                             ->required(),
 
                                         Forms\Components\Select::make('category_id')
@@ -107,10 +113,13 @@ class ArticleResource extends Resource
                                             ->required()
                                             ->createOptionForm([
                                                 Forms\Components\TextInput::make('name')
+                                                    ->label('Nombre')
                                                     ->required()
                                                     ->live(onBlur: true)
                                                     ->afterStateUpdated(fn (Forms\Set $set, $state) => $set('slug', Str::slug($state))),
-                                                Forms\Components\TextInput::make('slug')->required(),
+                                                Forms\Components\TextInput::make('slug')
+                                                    ->label('Slug')
+                                                    ->required(),
                                             ]),
 
                                         Forms\Components\Select::make('tags')
@@ -118,13 +127,15 @@ class ArticleResource extends Resource
                                             ->multiple()
                                             ->preload()
                                             ->searchable()
-                                            ->label('Tags')
+                                            ->label('Etiquetas')
                                             ->createOptionForm([
                                                 Forms\Components\TextInput::make('name')
+                                                    ->label('Nombre')
                                                     ->required()
                                                     ->live(onBlur: true)
                                                     ->afterStateUpdated(fn (Forms\Set $set, $state) => $set('slug', Str::slug($state))),
                                                 Forms\Components\TextInput::make('slug')
+                                                    ->label('Slug')
                                                     ->required(),
                                             ]),
                                     ]),
@@ -138,29 +149,31 @@ class ArticleResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('featured_image_url')
-                    ->label('Image')
+                    ->label('Imagen')
                     ->circular(),
 
                 Tables\Columns\TextColumn::make('title')
+                    ->label('Título')
                     ->searchable()
                     ->sortable()
                     ->weight('bold')
                     ->limit(30),
 
                 Tables\Columns\TextColumn::make('author.name')
-                    ->label('Author')
+                    ->label('Autor')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('category.name')
-                    ->label('Category')
+                    ->label('Categoría')
                     ->searchable()
                     ->sortable()
                     ->badge()
                     ->color('gray'),
 
                 Tables\Columns\TextColumn::make('status')
+                    ->label('Estado')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'draft' => 'gray',
@@ -169,15 +182,18 @@ class ArticleResource extends Resource
                     }),
 
                 Tables\Columns\TextColumn::make('published_at')
+                    ->label('Publicado')
                     ->dateTime('M j, Y H:i')
                     ->sortable()
                     ->toggleable(),
 
                 Tables\Columns\IconColumn::make('allows_comments')
+                    ->label('Comentarios')
                     ->boolean()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -186,12 +202,14 @@ class ArticleResource extends Resource
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
                 Tables\Filters\SelectFilter::make('status')
+                    ->label('Estado')
                     ->options([
-                        'draft' => 'Draft',
-                        'scheduled' => 'Scheduled',
-                        'published' => 'Published',
+                        'draft' => 'Borrador',
+                        'scheduled' => 'Programado',
+                        'published' => 'Publicado',
                     ]),
                 Tables\Filters\SelectFilter::make('category')
+                    ->label('Categoría')
                     ->relationship('category', 'name'),
             ])
             ->actions([
