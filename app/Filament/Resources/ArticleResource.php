@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 use App\Filament\Resources\ArticleResource\RelationManagers\CommentsRelationManager;
+use App\Enums\EnumArticleStatus;
 
 class ArticleResource extends Resource
 {
@@ -80,11 +81,7 @@ class ArticleResource extends Resource
 
                                         Forms\Components\Select::make('status')
                                             ->label('Estado')
-                                            ->options([
-                                                'draft' => 'Borrador',
-                                                'scheduled' => 'Programado',
-                                                'published' => 'Publicado',
-                                            ])
+                                            ->options(EnumArticleStatus::labels())
                                             ->required()
                                             ->native(false),
 
@@ -176,9 +173,9 @@ class ArticleResource extends Resource
                     ->label('Estado')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'draft' => 'gray',
-                        'scheduled' => 'warning',
-                        'published' => 'success',
+                        EnumArticleStatus::Draft->value => 'gray',
+                        EnumArticleStatus::Scheduled->value => 'warning',
+                        EnumArticleStatus::Published->value => 'success',
                     }),
 
                 Tables\Columns\TextColumn::make('published_at')
@@ -203,11 +200,7 @@ class ArticleResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
                 Tables\Filters\SelectFilter::make('status')
                     ->label('Estado')
-                    ->options([
-                        'draft' => 'Borrador',
-                        'scheduled' => 'Programado',
-                        'published' => 'Publicado',
-                    ]),
+                    ->options(EnumArticleStatus::labels()),
                 Tables\Filters\SelectFilter::make('category')
                     ->label('Categoría')
                     ->relationship('category', 'name'),

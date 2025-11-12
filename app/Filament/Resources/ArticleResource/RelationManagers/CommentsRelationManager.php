@@ -8,6 +8,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\EnumCommentStatus;
 
 class CommentsRelationManager extends RelationManager
 {
@@ -20,27 +21,25 @@ class CommentsRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\TextInput::make('author_name')
-                    ->label('Author')
+                    ->label('Autor')
                     ->required()
                     ->maxLength(255),
 
                 Forms\Components\TextInput::make('author_email')
-                    ->label('Email')
+                    ->label('Correo electrónico')
                     ->email()
                     ->required()
                     ->maxLength(255),
 
                 Forms\Components\Select::make('status')
-                    ->options([
-                        'pending' => 'Pending',
-                        'approved' => 'Approved',
-                        'spam' => 'Spam',
-                    ])
+                    ->label('Estado')
+                    ->options(EnumCommentStatus::labels())
                     ->required()
-                    ->native(false),
+                    ->native(false)
+                    ->default(EnumCommentStatus::Pending->value),
 
                 Forms\Components\Textarea::make('content')
-                    ->label('Comment')
+                    ->label('Comentario')
                     ->required()
                     ->columnSpanFull()
                     ->rows(4),
@@ -53,13 +52,13 @@ class CommentsRelationManager extends RelationManager
             ->recordTitleAttribute('content')
             ->columns([
                 Tables\Columns\TextColumn::make('author_name')
-                    ->label('Author')
+                    ->label('Autor')
                     ->searchable()
                     ->sortable()
                     ->description(fn (Model $record): string => $record->author_email), // Muestra el email debajo del nombre
 
                 Tables\Columns\TextColumn::make('content')
-                    ->label('Comment')
+                    ->label('Comentario')
                     ->searchable()
                     ->limit(50)
                     ->tooltip(function (Tables\Columns\TextColumn $column): ?string {
@@ -71,25 +70,23 @@ class CommentsRelationManager extends RelationManager
                     }),
 
                 Tables\Columns\TextColumn::make('status')
+                    ->label('Estado')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'pending' => 'warning',
-                        'approved' => 'success',
-                        'spam' => 'danger',
+                        EnumCommentStatus::Pending->value => 'warning',
+                        EnumCommentStatus::Approved->value => 'success',
+                        EnumCommentStatus::Spam->value => 'danger',
                     }),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Date')
+                    ->label('Fecha')
                     ->dateTime('M j, Y H:i')
                     ->sortable(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
-                    ->options([
-                        'pending' => 'Pending',
-                        'approved' => 'Approved',
-                        'spam' => 'Spam',
-                    ]),
+                    ->label('Estado')
+                    ->options(EnumCommentStatus::labels()),
             ])
             ->headerActions([
                 // Generalmente no se crean comentarios desde el panel de admin, pero se puede dejar si es útil
@@ -101,18 +98,18 @@ class CommentsRelationManager extends RelationManager
 
                 // Acciones rápidas de moderación
                 Tables\Actions\Action::make('approve')
-                    ->label('Approve')
+                    ->label('Aprobar')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
-                    ->action(fn (Model $record) => $record->update(['status' => 'approved']))
-                    ->visible(fn (Model $record): bool => $record->status !== 'approved'),
+                    ->action(fn (Model $record) => $record->update(['status' => EnumCommentStatus::Approved->value]))
+                    ->visible(fn (Model $record): bool => $record->status !== EnumCommentStatus::Approved->value),
 
                 Tables\Actions\Action::make('mark_as_spam')
-                    ->label('Spam')
+                    ->label('Marcar como spam')
                     ->icon('heroicon-o-no-symbol')
                     ->color('danger')
-                    ->action(fn (Model $record) => $record->update(['status' => 'spam']))
-                    ->visible(fn (Model $record): bool => $record->status !== 'spam'),
+                    ->action(fn (Model $record) => $record->update(['status' => EnumCommentStatus::Spam->value]))
+                    ->visible(fn (Model $record): bool => $record->status !== EnumCommentStatus::Spam->value),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -120,10 +117,10 @@ class CommentsRelationManager extends RelationManager
 
                     // Acciones masivas también son útiles
                     Tables\Actions\BulkAction::make('approve_all')
-                        ->label('Approve Selected')
+                        ->label('Aprobar seleccionados')
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
-                        ->action(fn ($records) => $records->each->update(['status' => 'approved']))
+                        ->action(fn ($records) => $records->each->update(['status' => EnumCommentStatus::Approved->value]))
                         ->deselectRecordsAfterCompletion(),
                 ]),
             ]);
