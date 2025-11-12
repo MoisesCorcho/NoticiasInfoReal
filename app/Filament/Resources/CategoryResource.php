@@ -22,7 +22,13 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $navigationGroup = 'Content Management';
+    protected static ?string $navigationGroup = 'Gestión de Contenido';
+
+    protected static ?string $navigationLabel = 'Categorías';
+
+    protected static ?string $modelLabel = 'categoría';
+
+    protected static ?string $pluralModelLabel = 'categorías';
 
     protected static ?int $navigationSort = 2;
 
@@ -139,7 +145,7 @@ class CategoryResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    //
                 ]),
             ]);
     }

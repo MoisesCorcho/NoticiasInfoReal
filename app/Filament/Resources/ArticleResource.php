@@ -27,7 +27,13 @@ class ArticleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static ?string $navigationGroup = 'Content Management';
+    protected static ?string $navigationGroup = 'Gestión de Contenido';
+
+    protected static ?string $navigationLabel = 'Artículos';
+
+    protected static ?string $modelLabel = 'artículo';
+
+    protected static ?string $pluralModelLabel = 'artículos';
 
     public static function form(Form $form): Form
     {
@@ -215,9 +221,6 @@ class ArticleResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }

@@ -18,6 +18,9 @@ class HomepageSectionResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-view-columns';
     protected static ?string $navigationGroup = 'Gestión de Contenido';
     protected static ?int $navigationSort = 2;
+    protected static ?string $navigationLabel = 'Secciones de portada';
+    protected static ?string $modelLabel = 'sección de portada';
+    protected static ?string $pluralModelLabel = 'secciones de portada';
 
     public static function form(Form $form): Form
     {
@@ -140,7 +143,7 @@ class HomepageSectionResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    //
                 ]),
             ])
             ->defaultSort('display_order', 'asc');
