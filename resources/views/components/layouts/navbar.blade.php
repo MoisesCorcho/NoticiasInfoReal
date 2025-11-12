@@ -23,8 +23,16 @@
 
         {{-- Lado Izquierdo: Logo --}}
         <div class="flex-1 flex justify-start items-center">
-            <a href="{{ route('home') }}" class="text-2xl font-bold tracking-wide text-white">
-                {{ config('app.name') }}
+            <a href="{{ route('home') }}" class="block">
+                <span class="sr-only">{{ config('app.name') }}</span>
+                <img
+                    src="{{ asset('images/logos/Logo InfoReal Blanco.png') }}"
+                    alt="InfoReal"
+                    class="h-10 w-auto"
+                    width="224"
+                    height="64"
+                    decoding="async"
+                />
             </a>
         </div>
 
@@ -172,7 +180,17 @@
             class="relative max-w-xs w-full bg-[#333233] border-r border-white/10 shadow-2xl py-4 pb-12 flex flex-col overflow-y-auto h-full"
         >
             <div class="px-4 flex items-center justify-between pb-4 border-b border-white/10">
-                <span class="text-xl font-bold text-white">Categorías</span>
+                <div class="flex items-center gap-3">
+                    <img
+                        src="{{ asset('images/logos/Isotipo InfoReal Blanco.png') }}"
+                        alt="InfoReal isotipo"
+                        class="h-8 w-auto"
+                        width="64"
+                        height="64"
+                        decoding="async"
+                    />
+                    <span class="text-xl font-bold text-white">Categorías</span>
+                </div>
                 <button @click="mobileMenuOpen = false" class="-mr-2 p-2 text-muted hover:text-white focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />

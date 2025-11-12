@@ -27,6 +27,9 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('InfoReal')
+            ->brandLogo(fn () => view('filament.logo'))
+            ->favicon(asset('images/logos/Isotipo InfoReal Rojo.png'))
             ->colors([
                 'primary' => Color::Amber,
             ])

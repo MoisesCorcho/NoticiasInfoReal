@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? config('app.name') }}</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/logos/Isotipo InfoReal Rojo.png') }}">
 
     <!-- Swiper.js CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
