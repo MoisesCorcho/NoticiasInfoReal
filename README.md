@@ -30,6 +30,236 @@ El proyecto ofrece un frontend estilo revista y un panel administrativo completo
 
 ---
 
+### 🗄️ Arquitectura de Base de Datos
+
+El sistema utiliza una estructura relacional bien definida que permite gestionar contenido jerárquico, etiquetado flexible y secciones personalizables. A continuación se detalla cada entidad y sus relaciones.
+
+#### 📊 Diagrama de Relaciones
+
+```
+Users (id)
+  └── Articles (id_article, user_id, category_id, ...)
+       ├── Comments (id_comment, article_id, ...)
+       └── Article_Tag (article_id, tag_id) ←→ Tags (id_tag)
+
+Categories (id_category, parent_id)
+  ├── Articles (id_article, category_id, ...)
+  ├── Children (id_category, parent_id) [auto-relación]
+  └── HomepageSections (id, category_id, ...)
+```
+
+#### 📝 Tabla: `articles`
+
+**Propósito**: Almacena el contenido principal de las noticias.
+
+**Campos principales**:
+- `id_article` (PK): Identificador único del artículo.
+- `title`: Título del artículo.
+- `slug`: URL amigable única (ej: `mi-noticia-importante`).
+- `content`: Contenido HTML completo del artículo (RichEditor).
+- `excerpt`: Resumen corto para SEO y listados (opcional).
+- `user_id` (FK → `users.id`): Autor del artículo. **Cascade delete**: si se elimina el usuario, se eliminan sus artículos.
+- `category_id` (FK → `categories.id_category`): Categoría principal. **Restrict delete**: no se puede eliminar una categoría si tiene artículos.
+- `published_at` (timestamp, nullable): Fecha/hora de publicación. Si es `null`, el artículo no se publica automáticamente.
+- `status` (enum): Estado del artículo:
+  - `draft`: Borrador (solo visible en admin).
+  - `scheduled`: Programado (visible cuando `published_at` llegue).
+  - `published`: Publicado (visible si `published_at <= now()`).
+- `featured_image_url` (string, nullable): Ruta de la imagen destacada.
+- `allows_comments` (boolean): Controla si se permiten comentarios.
+- `created_at`, `updated_at`, `deleted_at` (soft deletes).
+
+**Reglas de negocio**:
+- Un artículo se muestra públicamente solo si `status = 'published'` Y `published_at <= now()`.
+- El slug debe ser único en toda la tabla.
+- Un artículo pertenece a una única categoría principal.
+- Un artículo puede tener múltiples etiquetas (relación muchos-a-muchos).
+
+**Relaciones**:
+- `belongsTo(User)` → `author()`: Autor del artículo.
+- `belongsTo(Category)` → `category()`: Categoría principal.
+- `hasMany(Comment)` → `comments()`: Comentarios asociados.
+- `belongsToMany(Tag)` → `tags()`: Etiquetas (tabla pivote `article_tag`).
+
+---
+
+#### 📂 Tabla: `categories`
+
+**Propósito**: Organiza artículos en una estructura jerárquica (árbol de categorías).
+
+**Campos principales**:
+- `id_category` (PK): Identificador único de la categoría.
+- `name`: Nombre de la categoría (ej: "Deportes", "Tecnología").
+- `slug`: URL amigable única.
+- `parent_id` (FK → `categories.id_category`, nullable): Categoría padre. Si es `null`, es una categoría raíz. **Null on delete**: si se elimina el padre, los hijos pasan a ser raíz.
+- `created_at`, `updated_at`.
+
+**Jerarquía**:
+- El sistema soporta hasta **3 niveles de profundidad** (configurable en el trait `HasHierarchy`):
+  - Nivel 0: Categorías raíz (ej: "Deportes").
+  - Nivel 1: Subcategorías (ej: "Fútbol" bajo "Deportes").
+  - Nivel 2: Sub-subcategorías (ej: "Liga Local" bajo "Fútbol").
+- Se previenen ciclos infinitos: una categoría no puede ser padre de sus propios ancestros.
+- Se valida la profundidad máxima antes de asignar un padre.
+
+**Relaciones**:
+- `hasMany(Article)` → `articles()`: Artículos asociados a esta categoría.
+- `belongsTo(Category)` → `parent()`: Categoría padre (si existe).
+- `hasMany(Category)` → `children()`: Subcategorías directas.
+- `hasMany(HomepageSection)` → `homepageSection()`: Secciones de portada que usan esta categoría.
+
+**Reglas de negocio**:
+- No se puede eliminar una categoría que tenga artículos asociados (restricción de integridad referencial).
+- Al eliminar una categoría padre, sus hijos pasan a ser raíz (`parent_id = null`).
+- El slug debe ser único en toda la tabla.
+
+**Métodos útiles del trait `HasHierarchy`**:
+- `getDepth()`: Calcula la profundidad actual (0 = raíz).
+- `canHaveChildren()`: Verifica si puede tener hijos según la profundidad máxima.
+- `getAllAncestors()`: Obtiene todos los ancestros hacia arriba.
+- `hasCircularReference($newParentId)`: Detecta si asignar un padre crearía un ciclo.
+- `getFullPath($separator)`: Devuelve la ruta completa (ej: "Deportes > Fútbol > Liga Local").
+
+---
+
+#### 🏷️ Tabla: `tags`
+
+**Propósito**: Etiquetas flexibles para clasificar artículos de forma transversal (no jerárquica).
+
+**Campos principales**:
+- `id_tag` (PK): Identificador único de la etiqueta.
+- `name`: Nombre de la etiqueta (ej: "Breaking News", "Análisis").
+- `slug`: URL amigable única.
+- `created_at`, `updated_at`.
+
+**Relaciones**:
+- `belongsToMany(Article)` → `articles()`: Artículos etiquetados (tabla pivote `article_tag`).
+
+**Reglas de negocio**:
+- Un tag puede estar asociado a múltiples artículos.
+- Un artículo puede tener múltiples tags.
+- El slug debe ser único.
+
+---
+
+#### 🔗 Tabla pivote: `article_tag`
+
+**Propósito**: Relación muchos-a-muchos entre artículos y etiquetas.
+
+**Estructura**:
+- `article_id` (FK → `articles.id_article`): **Cascade delete**: si se elimina un artículo, se eliminan sus relaciones con tags.
+- `tag_id` (FK → `tags.id_tag`): **Cascade delete**: si se elimina un tag, se eliminan sus relaciones con artículos.
+- Clave primaria compuesta: `PRIMARY KEY (article_id, tag_id)` para evitar duplicados.
+
+**Reglas de negocio**:
+- No puede haber duplicados: un artículo no puede tener la misma etiqueta dos veces.
+
+---
+
+#### 🏠 Tabla: `homepage_sections`
+
+**Propósito**: Configura qué categorías y cómo se muestran en la página principal del sitio.
+
+**Campos principales**:
+- `id` (PK): Identificador único de la sección.
+- `category_id` (FK → `categories.id_category`): Categoría que se mostrará en esta sección. **Cascade delete**: si se elimina la categoría, se elimina la sección.
+- `display_title` (string, nullable): Título personalizado. Si es `null`, se usa el nombre de la categoría.
+- `display_order` (integer, default: 0): Orden de aparición en la portada (0 = primero, 1 = segundo, etc.). Debe ser único.
+- `is_active` (boolean, default: true): Activa/desactiva la sección sin eliminarla.
+- `layout` (enum): Estilo visual de la sección:
+  - `grid`: Rejilla de 6 artículos en formato cuadrícula.
+  - `carousel`: Carrusel deslizante horizontal.
+  - `magazine`: 1 artículo grande + 4 pequeños en formato revista.
+- `created_at`, `updated_at`.
+
+**Relaciones**:
+- `belongsTo(Category)` → `category()`: Categoría asociada.
+
+**Reglas de negocio**:
+- Cada sección muestra los artículos **publicados** de su categoría asociada.
+- El `display_order` debe ser único para evitar conflictos de ordenamiento.
+- Solo las secciones con `is_active = true` aparecen en la portada.
+- Las secciones se ordenan por `display_order` ascendente.
+
+**Flujo en el frontend**:
+1. El componente `HomePage` (Livewire) consulta todas las secciones activas ordenadas.
+2. Para cada sección, obtiene los artículos publicados de su categoría.
+3. Renderiza cada sección según su `layout` (grid, carousel, magazine).
+
+---
+
+#### 💬 Tabla: `comments`
+
+**Propósito**: Comentarios de usuarios en artículos (sistema de moderación).
+
+**Campos principales**:
+- `id_comment` (PK): Identificador único del comentario.
+- `article_id` (FK → `articles.id_article`): Artículo al que pertenece. **Cascade delete**: si se elimina el artículo, se eliminan sus comentarios.
+- `author_name` (string): Nombre del autor del comentario.
+- `author_email` (string): Email del autor.
+- `content` (text): Contenido del comentario.
+- `status` (enum): Estado de moderación:
+  - `pending`: Pendiente de revisión (no visible públicamente).
+  - `approved`: Aprobado (visible en el sitio).
+  - `spam`: Marcado como spam (no visible).
+- `created_at`, `updated_at`.
+
+**Relaciones**:
+- `belongsTo(Article)` → `article()`: Artículo asociado.
+
+**Reglas de negocio**:
+- Solo los comentarios con `status = 'approved'` se muestran públicamente.
+- Los comentarios se pueden moderar desde el panel de Filament (RelationManager en Artículos).
+- Un artículo debe tener `allows_comments = true` para permitir nuevos comentarios.
+
+---
+
+#### 🔐 Restricciones de Integridad Referencial
+
+| Tabla Origen | Campo FK | Tabla Destino | Acción al Eliminar |
+|--------------|----------|---------------|-------------------|
+| `articles` | `user_id` | `users` | **CASCADE**: Elimina artículos del usuario. |
+| `articles` | `category_id` | `categories` | **RESTRICT**: Impide eliminar categoría con artículos. |
+| `comments` | `article_id` | `articles` | **CASCADE**: Elimina comentarios del artículo. |
+| `article_tag` | `article_id` | `articles` | **CASCADE**: Elimina relaciones del artículo. |
+| `article_tag` | `tag_id` | `tags` | **CASCADE**: Elimina relaciones del tag. |
+| `categories` | `parent_id` | `categories` | **NULL ON DELETE**: Los hijos pasan a ser raíz. |
+| `homepage_sections` | `category_id` | `categories` | **CASCADE**: Elimina secciones de la categoría. |
+
+---
+
+#### 📈 Consultas y Scopes Importantes
+
+**Artículos publicados**:
+```php
+Article::published()->get(); // status='published' AND published_at <= now()
+```
+
+**Artículos por categoría**:
+```php
+$category->articles()->published()->latest('published_at')->get();
+```
+
+**Categorías raíz**:
+```php
+Category::whereNull('parent_id')->get();
+```
+
+**Secciones activas ordenadas**:
+```php
+HomepageSection::where('is_active', true)
+    ->orderBy('display_order')
+    ->with('category.articles')
+    ->get();
+```
+
+**Comentarios aprobados**:
+```php
+$article->comments()->where('status', 'approved')->get();
+```
+
+---
+
 ### 📦 Requisitos previos
 
 - PHP 8.2 o superior con las extensiones de Laravel.
