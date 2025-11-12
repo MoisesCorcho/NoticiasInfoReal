@@ -3,8 +3,9 @@
 namespace App\Livewire;
 
 use App\Models\Article;
-use App\Models\Category;
 use Livewire\Component;
+use App\Models\HomepageSection;
+use App\Enums\EnumHomepageSectionLayout;
 
 class HomePage extends Component
 {
@@ -28,25 +29,41 @@ class HomePage extends Component
             ->take(6)
             ->get();
 
-        $featuredCategory = Category::where('is_featured', true)->first();
-        $featuredCategoryArticles = [];
+        $homepageSections = HomepageSection::query()
+            ->where('is_active', true)
+            ->with('category') // Cargar la relación con la categoría
+            ->orderBy('display_order', 'asc')
+            ->get();
 
-        if ($featuredCategory) {
-            $featuredCategoryArticles = Article::query()
+        // Preparar los datos para la vista: un array que contiene la sección y sus artículos
+        $homepageSectionsData = $homepageSections->map(function ($section) use ($heroIds) {
+            
+            // Determinar cuántos artículos buscar según el layout
+            $limit = match ($section->layout) {
+                EnumHomepageSectionLayout::Carousel => 10, // 10 para el carrusel
+                EnumHomepageSectionLayout::Grid => 6,     // 6 para la rejilla (como "Sports")
+                EnumHomepageSectionLayout::Magazine => 5, // 5 para el magazine (1 grande + 4 pequeños)
+            };
+
+            $articles = Article::query()
                 ->published()
-                ->where('category_id', $featuredCategory->id_category)
-                // ->orWhereIn('category_id', $featuredCategory->children->pluck('id_category')) // Opcional: incluir hijos
+                ->where('category_id', $section->category_id)
+                ->whereNotIn('id_article', $heroIds) // No repetir artículos del hero
                 ->with('category')
                 ->latest('published_at')
-                ->take(10) // Tomamos 10 para el carrusel
+                ->take($limit)
                 ->get();
-        }
+
+            return [
+                'section' => $section,
+                'articles' => $articles,
+            ];
+        });
 
         return view('livewire.home-page', [
             'heroArticles' => $heroArticles,
             'latestArticles' => $latestArticles,
-            'featuredCategory' => $featuredCategory,
-            'featuredCategoryArticles' => $featuredCategoryArticles,
+            'homepageSectionsData' => $homepageSectionsData,
         ]);
     }
 

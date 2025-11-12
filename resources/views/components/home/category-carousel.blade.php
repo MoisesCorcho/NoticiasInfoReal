@@ -20,10 +20,17 @@
 }" x-init="initSwiper()">
 
     {{-- Título de la sección (dinámico) --}}
-    <div class="flex items-center justify-between mb-6 border-b border-white/10">
-        <h2 class="text-xl font-bold uppercase bg-[#d71935] text-white px-4 py-1 inline-block rounded-t-md">
+    <div class="flex items-center mb-6">
+        {{-- Línea izquierda --}}
+        <div class="flex-grow bg-[#d71935] h-2"></div>
+
+        {{-- Título --}}
+        <h2 class="text-lg font-bold uppercase text-white mx-4 flex-shrink-0">
             {{ $category->name }}
         </h2>
+
+        {{-- Línea derecha --}}
+        <div class="flex-grow bg-[#d71935] h-2"></div>
     </div>
 
     {{-- Contenedor del Carrusel --}}

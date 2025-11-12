@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 use App\Traits\HasHierarchy;
 
 class Category extends Model
@@ -18,7 +19,6 @@ class Category extends Model
         'name',
         'slug',
         'parent_id',
-        'is_featured',
     ];
 
     public function articles(): HasMany
@@ -36,5 +36,10 @@ class Category extends Model
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'parent_id', 'id_category');
+    }
+
+    public function homepageSection(): HasMany
+    {
+        return $this->hasMany(HomepageSection::class, 'category_id', 'id');
     }
 }

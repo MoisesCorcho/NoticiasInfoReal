@@ -9,8 +9,49 @@
         <x-home.latest-news :articles="$latestArticles" />
     @endif
 
-    {{-- SECCIÓN 3: CATEGORÍAS ESPECÍFICAS (Carrusel) --}}
-    @if ($featuredCategory)
-        <x-home.category-carousel :category="$featuredCategory" :articles="$featuredCategoryArticles" />
+    {{-- SECCIÓN 3: SECCIONES DE PORTADA (Carrusel) --}}
+
+@php
+    use App\Enums\EnumHomepageSectionLayout;
+@endphp
+
+@if ($homepageSectionsData->isNotEmpty())
+        @foreach ($homepageSectionsData as $data)
+            {{-- Solo renderizar si la sección tiene artículos --}}
+            @if ($data['articles']->isNotEmpty())
+                
+                @switch($data['section']->layout)
+                    
+                    @case(EnumHomepageSectionLayout::Carousel)
+                        {{-- Ya tenías este componente --}}
+                        <x-home.category-carousel 
+                            :category="$data['section']->category" 
+                            :articles="$data['articles']" />
+                        @break
+
+                    @case(EnumHomepageSectionLayout::Grid)
+                        {{-- El nuevo componente genérico de rejilla (como "Sports") --}}
+                        <x-home.grid-section 
+                            :section="$data['section']" 
+                            :articles="$data['articles']" />
+                        @break
+
+                    @case(EnumHomepageSectionLayout::Magazine)
+                        {{-- El nuevo componente "Magazine" (como "Politics" + "Science") --}}
+                        <x-home.magazine-section 
+                            :section="$data['section']" 
+                            :articles="$data['articles']" />
+                        @break
+
+                    @default
+                        {{-- Fallback por si acaso --}}
+                        <x-home.grid-section 
+                            :section="$data['section']" 
+                            :articles="$data['articles']" />
+
+                @endswitch
+            
+            @endif
+        @endforeach
     @endif
 </div>
