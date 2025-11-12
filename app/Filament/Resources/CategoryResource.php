@@ -125,7 +125,8 @@ class CategoryResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->cantDeleteWithRelated(['articles' => 'Artículos asociados']),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
