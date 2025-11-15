@@ -298,9 +298,41 @@ $article->comments()->where('status', 'approved')->get();
    - El seeder crea un usuario administrador por defecto `admin@admin.com` / `password`.
 
 6. Crea el enlace simbólico de storage:
+
+   **Para desarrollo local** (recomendado):
    ```bash
    php artisan storage:link
    ```
+
+   **Para servidores de producción** (Hostinger, cPanel, etc.):
+   
+   En algunos servidores compartidos no se puede ejecutar `php artisan storage:link` directamente. Sigue estos pasos manuales:
+   
+   1. Entra a tu carpeta `public` (la que está dentro de `public_html`):
+      ```bash
+      cd public
+      ```
+      (Tu ruta ahora será `.../public_html/public`)
+   
+   2. Verifica si ya existe un enlace o carpeta `storage`:
+      ```bash
+      ls -l
+      ```
+      - Si ves una **carpeta** `storage` (raro, pero posible), bórrala: `rm -r storage`
+      - Si ves un **enlace** `storage` (probablemente roto), bórralo: `rm storage`
+      - Si no ves nada, perfecto.
+   
+   3. Crea el enlace simbólico correcto desde la carpeta `public`:
+      ```bash
+      ln -s ../storage/app/public storage
+      ```
+      Esto creará el enlace `public_html/public/storage` que apunta correctamente a `public_html/storage/app/public`.
+   
+   **Verificación**: Después de crear el enlace, verifica que funciona:
+      ```bash
+      ls -l storage
+      ```
+      Deberías ver algo como: `storage -> ../storage/app/public`
 
 7. Compila los assets:
    ```bash
@@ -398,6 +430,7 @@ Recuerda: solo se listan artículos `published` cuya fecha `published_at` es pas
 
 - **Categoría con artículos**: no podrás eliminarla hasta reasignar o borrar los artículos relacionados; el panel mostrará una notificación.
 - **Assets faltantes**: asegúrate de haber corrido `npm run dev` y `php artisan storage:link`.
+- **Enlace simbólico de storage no funciona en producción**: si estás en un servidor compartido (Hostinger, cPanel, etc.) y `php artisan storage:link` no funciona, crea el enlace manualmente siguiendo los pasos del punto 6 de la instalación.
 - **Traducciones**: si notas textos en inglés, limpia cachés (`php artisan config:clear && php artisan view:clear`) y vuelve a ejecutar `php artisan lang:update`.
 
 ---
