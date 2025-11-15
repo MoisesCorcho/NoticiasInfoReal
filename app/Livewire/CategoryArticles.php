@@ -15,7 +15,7 @@ class CategoryArticles extends Component
     /**
      * @var array<int, int>
      */
-    protected array $categoryIds = [];
+    public array $categoryIds = [];
 
     // Usamos mount para recibir el slug de la categoría desde la ruta
     public function mount($slug)
