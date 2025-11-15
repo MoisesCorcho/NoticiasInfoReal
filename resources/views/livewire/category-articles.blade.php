@@ -1,13 +1,9 @@
 <div class="max-w-screen-xl mx-auto">
     <header class="mb-12 border-b-2 border-[#d71935] pb-4">
+        <x-ui.category-breadcrumb :category="$category" class="text-sm text-gray-400 mb-2" />
         <h1 class="text-4xl font-bold text-white uppercase">
             {{ $category->name }}
         </h1>
-        @if($category->parent)
-            <p class="text-gray-400 mt-2">
-                Dentro de: <a href="{{ route('category.show', $category->parent->slug) }}" class="hover:text-[#d71935] transition-colors">{{ $category->parent->name }}</a>
-            </p>
-        @endif
     </header>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">

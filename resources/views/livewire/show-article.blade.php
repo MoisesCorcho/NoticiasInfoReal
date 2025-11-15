@@ -1,4 +1,10 @@
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+<div>
+    {{-- Breadcrumb fuera del contenido principal --}}
+    <div class="mb-4">
+        <x-ui.category-breadcrumb :category="$article->category" class="text-xs text-gray-400" />
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
     {{-- COLUMNA PRINCIPAL: CONTENIDO DEL ARTÍCULO --}}
     <div class="lg:col-span-2">
         <article class="bg-[#18181C] p-6 rounded-lg border border-white/10 mb-8">
@@ -134,4 +140,5 @@
             ESPACIO PUBLICITARIO<br>(300x250)
         </div>
     </aside>
+    </div>
 </div>
