@@ -12,9 +12,9 @@
             <header class="mb-6">
                 {{-- Categorías --}}
                 <div class="flex gap-2 mb-4">
-                    <a href="#" class="bg-[#d71935] text-white text-xs font-bold px-2 py-1 rounded uppercase hover:bg-red-700 transition">
+                    <span class="bg-[#d71935] text-white text-xs font-bold px-2 py-1 rounded uppercase">
                         {{ $article->category->name }}
-                    </a>
+                    </span>
                 </div>
 
                 {{-- Título --}}
@@ -65,9 +65,9 @@
                     <h3 class="text-sm font-bold text-gray-300 uppercase mb-3">Etiquetas:</h3>
                     <div class="flex flex-wrap gap-2">
                         @foreach($article->tags as $tag)
-                            <a href="#" class="bg-[#333233] text-gray-300 text-xs px-3 py-1.5 rounded-full hover:bg-[#4a494a] transition">
+                            <span class="bg-[#333233] text-gray-300 text-xs px-3 py-1.5 rounded-full">
                                 #{{ $tag->name }}
-                            </a>
+                            </span>
                         @endforeach
                     </div>
                 </div>
@@ -134,10 +134,6 @@
                      />
                  @endforeach
              </div>
-        </div>
-
-        <div class="bg-[#18181C] p-6 rounded-lg border-2 border-dashed border-white/10 text-center text-gray-500">
-            ESPACIO PUBLICITARIO<br>(300x250)
         </div>
     </aside>
     </div>

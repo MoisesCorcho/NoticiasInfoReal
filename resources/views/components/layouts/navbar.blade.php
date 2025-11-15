@@ -26,7 +26,7 @@
             <a href="{{ route('home') }}" class="block">
                 <span class="sr-only">{{ config('app.name') }}</span>
                 <img
-                    src="{{ asset('images/logos/Logo InfoReal Blanco.png') }}"
+                    src="{{ asset('images/new_logos/Logo InfoReal Horizontal blanco-01.png') }}"
                     alt="InfoReal"
                     class="h-10 w-auto"
                     width="224"
@@ -73,7 +73,7 @@
                     <div class="static group h-full">
                         <a href="{{ route('category.show', $category->slug) }}" 
                            class="relative flex items-center h-full font-medium text-sm tracking-[0.32em] uppercase px-4 transition-colors duration-200
-                                  {{ request()->is('categoria/' . $category->slug . '*') ? 'text-white bg-[#d71935]' : 'text-muted group-hover:text-white group-hover:bg-[#d71935]' }}">
+                                  {{ (request()->routeIs('category.show') && request()->route('slug') === $category->slug) ? 'text-white bg-[#d71935]' : 'text-muted group-hover:text-white group-hover:bg-[#d71935]' }}">
                             {{ $category->name }}
                         </a>
 
@@ -139,7 +139,7 @@
                     class="w-full rounded-r-none border-r-0"
                     autofocus 
                 />
-                <button type="submit" class="bg-[#d71935] text-white px-4 hover:bg-red-700 transition-colors rounded-l-none rounded-r-md flex items-center">
+                <button type="submit" class="bg-[#d71935] text-white px-4 hover:bg-red-700 transition-colors rounded-l-none rounded-r-md flex items-center cursor-pointer">
                     <span class="hidden md:inline mr-2">Buscar</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
