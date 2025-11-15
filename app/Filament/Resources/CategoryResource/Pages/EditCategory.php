@@ -15,6 +15,11 @@ class EditCategory extends EditRecord
         return [
             Actions\ViewAction::make(),
             Actions\DeleteAction::make()
+                ->confirmPurgeTrashedRelated(['articles'], [
+                    'heading' => '¿Eliminar categoría?',
+                    'submitLabel' => 'Sí, eliminar y purgar',
+                    'icon' => 'heroicon-o-exclamation-triangle',
+                ])
                 ->cantDeleteWithRelated(['articles' => 'Artículos asociados']),
         ];
     }

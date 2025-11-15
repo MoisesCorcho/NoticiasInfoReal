@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
 use App\Traits\HasHierarchy;
 
 class Category extends Model
@@ -41,5 +40,15 @@ class Category extends Model
     public function homepageSection(): HasMany
     {
         return $this->hasMany(HomepageSection::class, 'category_id', 'id');
+    }
+
+    protected static function booted(): void
+    {
+        static::deleting(function (Category $category): void {
+            // Purga artículos en papelera para evitar violaciones de FK al borrar la categoría
+            Article::onlyTrashed()
+                ->where('category_id', $category->getKey())
+                ->forceDelete();
+        });
     }
 }

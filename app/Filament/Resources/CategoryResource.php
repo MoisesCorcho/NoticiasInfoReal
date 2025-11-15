@@ -141,6 +141,12 @@ class CategoryResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
+                    ->confirmPurgeTrashedRelated(['articles'], [
+                        'heading' => '¿Eliminar categoría?',
+                        'submitLabel' => 'Sí, eliminar y purgar',
+                        'icon' => 'heroicon-o-exclamation-triangle',
+                    ])
+                    // Aún así, bloquea si quedan artículos activos relacionados
                     ->cantDeleteWithRelated(['articles' => 'Artículos asociados']),
             ])
             ->bulkActions([
