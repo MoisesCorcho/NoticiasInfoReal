@@ -26,9 +26,9 @@
             <a href="{{ route('home') }}" class="block">
                 <span class="sr-only">{{ config('app.name') }}</span>
                 <img
-                    src="{{ asset('images/new_logos/Logo InfoReal Horizontal blanco-01.png') }}"
+                    src="{{ asset('images/new_logos/Logo InfoReal 23.png') }}"
                     alt="InfoReal"
-                    class="h-10 w-auto"
+                    class="h-18 w-auto"
                     width="224"
                     height="64"
                     decoding="async"

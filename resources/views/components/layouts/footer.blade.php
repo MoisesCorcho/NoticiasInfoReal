@@ -14,9 +14,9 @@
             <div class="col-span-1 md:col-span-2">
                 <div class="mb-4">
                     <img
-                        src="{{ asset('images/new_logos/Logo InfoReal Horizontal blanco-01.png') }}"
+                        src="{{ asset('images/new_logos/Logo InfoReal 23.png') }}"
                         alt="InfoReal"
-                        class="h-12 w-auto"
+                        class="h-18 w-auto"
                         width="224"
                         height="64"
                         decoding="async"
