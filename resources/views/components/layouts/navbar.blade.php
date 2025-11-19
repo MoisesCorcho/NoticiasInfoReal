@@ -19,16 +19,24 @@
 <header x-data="{ mobileMenuOpen: false, searchOpen: false }" class="bg-[#101014] [html[data-theme=light]_&]:bg-white sticky top-0 z-50 border-b border-white/10 [html[data-theme=light]_&]:border-gray-200 shadow-[0_18px_45px_rgba(0,0,0,0.45)] [html[data-theme=light]_&]:shadow-sm transition-colors duration-200">
     
     {{-- BARRA PRINCIPAL (Logo a la izquierda, Iconos a la derecha) --}}
-    <div class="max-w-screen-xl mx-auto px-4 relative flex items-center justify-between h-16">
+    <div class="max-w-screen-xl mx-auto px-4 relative flex items-center justify-between h-20">
 
         {{-- Lado Izquierdo: Logo --}}
         <div class="flex-1 flex justify-start items-center">
-            <a href="{{ route('home') }}" class="block">
+            <a href="{{ route('home') }}" class="block relative pb-2 border-b-2 border-[#d71935]">
                 <span class="sr-only">{{ config('app.name') }}</span>
                 <img
                     src="{{ asset('images/new_logos/Logo InfoReal 23.png') }}"
                     alt="InfoReal"
-                    class="h-18 w-auto"
+                    class="h-18 w-auto [html[data-theme=light]_&]:hidden"
+                    width="224"
+                    height="64"
+                    decoding="async"
+                />
+                <img
+                    src="{{ asset('images/new_logos/Logo InfoReal Horizontal negro-01.png') }}"
+                    alt="InfoReal"
+                    class="h-18 w-auto hidden [html[data-theme=light]_&]:block"
                     width="224"
                     height="64"
                     decoding="async"
@@ -137,7 +145,7 @@
         x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 -translate-y-2"
         @click.away="searchOpen = false"
-        class="absolute top-16 left-0 w-full bg-[#333233] [html[data-theme=light]_&]:bg-white shadow-2xl z-40 p-4 border-t border-white/10 [html[data-theme=light]_&]:border-gray-200 transition-colors duration-200"
+        class="absolute top-20 left-0 w-full bg-[#333233] [html[data-theme=light]_&]:bg-white shadow-2xl z-40 p-4 border-t border-white/10 [html[data-theme=light]_&]:border-gray-200 transition-colors duration-200"
         style="display: none;"
     >
         <div class="max-w-screen-xl mx-auto">
@@ -194,7 +202,15 @@
                     <img
                         src="{{ asset('images/logos/Isotipo InfoReal Blanco.png') }}"
                         alt="InfoReal isotipo"
-                        class="h-8 w-auto"
+                        class="h-8 w-auto [html[data-theme=light]_&]:hidden"
+                        width="64"
+                        height="64"
+                        decoding="async"
+                    />
+                    <img
+                        src="{{ asset('images/logos/Isotipo InfoReal Negro.png') }}"
+                        alt="InfoReal isotipo"
+                        class="h-8 w-auto hidden [html[data-theme=light]_&]:block"
                         width="64"
                         height="64"
                         decoding="async"

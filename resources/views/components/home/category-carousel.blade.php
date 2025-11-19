@@ -22,22 +22,22 @@
     {{-- Título de la sección (dinámico) --}}
     <div class="flex items-center mb-6">
         {{-- Línea izquierda --}}
-        <div class="flex-grow bg-[#d71935] h-2"></div>
+        <div class="flex-grow bg-[#d71935] h-1"></div>
 
         {{-- Título --}}
-        <h2 class="text-lg font-bold uppercase text-white mx-4 flex-shrink-0">
+        <h2 class="text-lg font-bold uppercase text-white [html[data-theme=light]_&]:text-gray-900 mx-4 flex-shrink-0 transition-colors duration-200">
             {{ $category->name }}
         </h2>
 
         {{-- Línea derecha --}}
-        <div class="flex-grow bg-[#d71935] h-2"></div>
+        <div class="flex-grow bg-[#d71935] h-1"></div>
     </div>
 
     {{-- Contenedor del Carrusel --}}
-    <div class="relative bg-[#18181C] p-4 rounded-lg border border-white/10">
+    <div class="relative bg-[#18181C] [html[data-theme=light]_&]:bg-white p-4 rounded-lg border border-white/10 [html[data-theme=light]_&]:border-gray-200 transition-colors duration-200">
         <div class="swiper" x-ref="carousel">
             <div class="swiper-wrapper">
-                {{-- Iteramos sobre los artículos (¡nota que ahora usamos $articles!) --}}
+                {{-- Iteramos sobre los artículos --}}
                 @forelse($articles as $article)
                     <div class="swiper-slide group relative aspect-[3/4] overflow-hidden rounded-md">
                         <a href="{{ route('article.show', $article->slug) }}" class="block w-full h-full">
@@ -62,7 +62,7 @@
                     </div>
                 @empty
                     <div class="swiper-slide">
-                        <div class="aspect-[3/4] flex items-center justify-center text-gray-500 bg-[#101014] rounded-md">
+                        <div class="aspect-[3/4] flex items-center justify-center text-gray-500 [html[data-theme=light]_&]:text-gray-600 bg-[#101014] [html[data-theme=light]_&]:bg-gray-100 rounded-md transition-colors duration-200">
                             No hay noticias.
                         </div>
                     </div>
@@ -72,14 +72,14 @@
 
         {{-- Botones de Navegación --}}
         <button x-ref="prev"
-                class="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#333233] text-white rounded-full shadow-md hover:bg-[#d71935] transition">
+                class="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#333233] [html[data-theme=light]_&]:bg-gray-200 text-white [html[data-theme=light]_&]:text-gray-900 rounded-full shadow-md hover:bg-[#d71935] transition-colors duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                  stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
             </svg>
         </button>
         <button x-ref="next"
-                class="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#333233] text-white rounded-full shadow-md hover:bg-[#d71935] transition">
+                class="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#333233] [html[data-theme=light]_&]:bg-gray-200 text-white [html[data-theme=light]_&]:text-gray-900 rounded-full shadow-md hover:bg-[#d71935] transition-colors duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                  stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />

@@ -1,5 +1,5 @@
-<div class="bg-[#333233] p-6 rounded-lg border border-white/10">
-    <h4 class="text-lg font-bold text-white mb-4 uppercase border-b-2 border-[#d71935] pb-2 inline-block">Buscar</h4>
+<div class="bg-[#333233] [html[data-theme=light]_&]:bg-gray-50 p-6 rounded-lg border border-white/10 [html[data-theme=light]_&]:border-gray-200 transition-colors duration-200">
+    <h4 class="text-lg font-bold text-white [html[data-theme=light]_&]:text-gray-900 mb-4 uppercase border-b-2 border-[#d71935] pb-2 inline-block transition-colors duration-200">Buscar</h4>
     <form wire:submit="search" class="flex">
         <x-ui.text-input 
             type="text" 

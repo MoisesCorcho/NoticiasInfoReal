@@ -16,7 +16,15 @@
                     <img
                         src="{{ asset('images/new_logos/Logo InfoReal 23.png') }}"
                         alt="InfoReal"
-                        class="h-18 w-auto"
+                        class="h-18 w-auto [html[data-theme=light]_&]:hidden"
+                        width="224"
+                        height="64"
+                        decoding="async"
+                    />
+                    <img
+                        src="{{ asset('images/new_logos/Logo InfoReal Horizontal negro-01.png') }}"
+                        alt="InfoReal"
+                        class="h-18 w-auto hidden [html[data-theme=light]_&]:block"
                         width="224"
                         height="64"
                         decoding="async"

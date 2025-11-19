@@ -12,15 +12,15 @@
     {{-- Título de la sección (Estilo "Sports" con línea) --}}
     <div class="flex items-center mb-6">
         {{-- Línea izquierda --}}
-        <div class="flex-grow bg-[#d71935] h-2"></div>
+        <div class="flex-grow bg-[#d71935] h-1"></div>
 
         {{-- Título --}}
-        <h2 class="text-lg font-bold uppercase text-white mx-4 flex-shrink-0">
+        <h2 class="text-lg font-bold uppercase text-white [html[data-theme=light]_&]:text-gray-900 mx-4 flex-shrink-0 transition-colors duration-200">
             {{ $title }}
         </h2>
 
         {{-- Línea derecha --}}
-        <div class="flex-grow bg-[#d71935] h-2"></div>
+        <div class="flex-grow bg-[#d71935] h-1"></div>
     </div>
 
     @if ($articles->isNotEmpty())
@@ -42,15 +42,15 @@
                         </div>
                     </a>
                     <div class="mt-3">
-                        <h3 class="text-lg font-bold text-white leading-tight group-hover:text-[#d71935] transition-colors duration-300 line-clamp-2">
+                        <h3 class="text-lg font-bold text-white [html[data-theme=light]_&]:text-gray-900 leading-tight group-hover:text-[#d71935] transition-colors duration-300 line-clamp-2">
                             <a href="{{ route('article.show', $article->slug) }}">{{ $article->title }}</a>
                         </h3>
-                        <span class="text-gray-500 text-xs mt-1">{{ $article->published_at->translatedFormat('j M, Y') }}</span>
+                        <span class="text-gray-500 [html[data-theme=light]_&]:text-gray-600 text-xs mt-1 transition-colors duration-200">{{ $article->published_at->translatedFormat('j M, Y') }}</span>
                     </div>
                 </div>
             @endforeach
         </div>
     @else
-        <p class="text-gray-500">No hay artículos disponibles para "{{ $title }}".</p>
+        <p class="text-gray-500 [html[data-theme=light]_&]:text-gray-600 transition-colors duration-200">No hay artículos disponibles para "{{ $title }}".</p>
     @endif
 </section>
