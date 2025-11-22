@@ -14,7 +14,7 @@
 
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
             <div class="absolute bottom-0 p-6 text-white">
-                <span class="inline-block bg-[#d71935] text-xs font-bold px-2 py-1 mb-2 rounded">
+                <span class="inline-block bg-red-primary text-xs font-bold px-2 py-1 mb-2 rounded">
                     {{ $articles[0]->category->name ?? 'General' }}
                 </span>
                 <h1 class="text-3xl font-bold leading-tight hover:underline">
@@ -43,7 +43,7 @@
                 @endif
                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
                     <div class="absolute bottom-0 p-4 text-white">
-                        <span class="bg-[#d71935] text-[10px] font-bold px-1.5 py-0.5 rounded">
+                        <span class="bg-red-primary text-[10px] font-bold px-1.5 py-0.5 rounded">
                             {{ $article->category->name ?? 'News' }}
                         </span>
                         <h3 class="font-bold text-lg leading-snug mt-1 hover:underline">

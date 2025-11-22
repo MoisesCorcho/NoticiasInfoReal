@@ -22,7 +22,7 @@
     {{-- Título de la sección (dinámico) --}}
     <div class="flex items-center mb-6">
         {{-- Línea izquierda --}}
-        <div class="flex-grow bg-[#d71935] h-0.5"></div>
+        <div class="flex-grow bg-red-primary h-0.5"></div>
 
         {{-- Título --}}
         <h2 class="text-lg font-bold uppercase text-white [html[data-theme=light]_&]:text-gray-900 mx-4 flex-shrink-0 transition-colors duration-200">
@@ -30,7 +30,7 @@
         </h2>
 
         {{-- Línea derecha --}}
-        <div class="flex-grow bg-[#d71935] h-0.5"></div>
+        <div class="flex-grow bg-red-primary h-0.5"></div>
     </div>
 
     {{-- Contenedor del Carrusel --}}
@@ -48,7 +48,7 @@
                             
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent">
                                 <div class="absolute bottom-0 p-3 text-white">
-                                    <span class="inline-block bg-[#d71935] text-white text-[10px] font-bold px-1.5 py-0.5 rounded mb-1">
+                                    <span class="inline-block bg-red-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded mb-1">
                                         {{ $article->category->name }}
                                     </span>
                                     <h4 class="font-bold text-sm leading-tight line-clamp-2">
@@ -72,14 +72,14 @@
 
         {{-- Botones de Navegación --}}
         <button x-ref="prev"
-                class="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#333233] [html[data-theme=light]_&]:bg-gray-200 text-white [html[data-theme=light]_&]:text-gray-900 rounded-full shadow-md hover:bg-[#d71935] transition-colors duration-200">
+                class="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#333233] [html[data-theme=light]_&]:bg-gray-200 text-white [html[data-theme=light]_&]:text-gray-900 rounded-full shadow-md hover:bg-red-primary transition-colors duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                  stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
             </svg>
         </button>
         <button x-ref="next"
-                class="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#333233] [html[data-theme=light]_&]:bg-gray-200 text-white [html[data-theme=light]_&]:text-gray-900 rounded-full shadow-md hover:bg-[#d71935] transition-colors duration-200">
+                class="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#333233] [html[data-theme=light]_&]:bg-gray-200 text-white [html[data-theme=light]_&]:text-gray-900 rounded-full shadow-md hover:bg-red-primary transition-colors duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                  stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />

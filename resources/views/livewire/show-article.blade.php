@@ -12,7 +12,7 @@
             <header class="mb-6">
                 {{-- Categorías --}}
                 <div class="flex gap-2 mb-4">
-                    <span class="bg-[#d71935] text-white text-xs font-bold px-2 py-1 rounded uppercase">
+                    <span class="bg-red-primary text-white text-xs font-bold px-2 py-1 rounded uppercase">
                         {{ $article->category->name }}
                     </span>
                 </div>
@@ -55,7 +55,7 @@
             @endif
 
             {{-- Cuerpo del Artículo --}}
-            <div class="prose prose-lg max-w-none [html[data-theme=dark]_&]:prose-invert prose-img:rounded-lg prose-headings:font-bold prose-headings:[html[data-theme=light]_&]:text-gray-900 prose-a:text-[#d71935] hover:prose-a:text-red-700 [html[data-theme=light]_&]:prose-p:text-gray-700 transition-colors duration-200">
+            <div class="prose prose-lg max-w-none [html[data-theme=dark]_&]:prose-invert prose-img:rounded-lg prose-headings:font-bold prose-headings:[html[data-theme=light]_&]:text-gray-900 prose-a:text-red-primary hover:prose-a:text-red-700 [html[data-theme=light]_&]:prose-p:text-gray-700 transition-colors duration-200">
                 {!! $article->content !!}
             </div>
 
@@ -83,8 +83,8 @@
                             <img src="{{ Storage::url($previousArticle->featured_image_url) }}" alt="{{ $previousArticle->title }}" class="w-20 h-20 object-cover rounded-md mr-4 shrink-0 hidden sm:block">
                         @endif
                         <div>
-                            <span class="block text-xs text-gray-400 [html[data-theme=light]_&]:text-gray-600 uppercase mb-1 group-hover:text-[#d71935] transition-colors">&larr; Anterior</span>
-                            <h4 class="font-bold text-white [html[data-theme=light]_&]:text-gray-900 leading-tight line-clamp-2 group-hover:text-[#d71935] transition-colors">
+                            <span class="block text-xs text-gray-400 [html[data-theme=light]_&]:text-gray-600 uppercase mb-1 group-hover:text-red-primary transition-colors">&larr; Anterior</span>
+                            <h4 class="font-bold text-white [html[data-theme=light]_&]:text-gray-900 leading-tight line-clamp-2 group-hover:text-red-primary transition-colors">
                                 {{ $previousArticle->title }}
                             </h4>
                         </div>
@@ -97,8 +97,8 @@
                 @if($nextArticle)
                     <a href="{{ route('article.show', $nextArticle->slug) }}" class="flex items-center justify-end text-right bg-[#18181C] [html[data-theme=light]_&]:bg-white p-4 rounded-lg border border-white/10 [html[data-theme=light]_&]:border-gray-200 hover:bg-[#333233] [html[data-theme=light]_&]:hover:bg-gray-100 transition-colors h-full group">
                         <div>
-                            <span class="block text-xs text-gray-400 [html[data-theme=light]_&]:text-gray-600 uppercase mb-1 group-hover:text-[#d71935] transition-colors">Siguiente &rarr;</span>
-                            <h4 class="font-bold text-white [html[data-theme=light]_&]:text-gray-900 leading-tight line-clamp-2 group-hover:text-[#d71935] transition-colors">
+                            <span class="block text-xs text-gray-400 [html[data-theme=light]_&]:text-gray-600 uppercase mb-1 group-hover:text-red-primary transition-colors">Siguiente &rarr;</span>
+                            <h4 class="font-bold text-white [html[data-theme=light]_&]:text-gray-900 leading-tight line-clamp-2 group-hover:text-red-primary transition-colors">
                                 {{ $nextArticle->title }}
                             </h4>
                         </div>
@@ -122,14 +122,14 @@
         <livewire:search-widget />
 
         <div class="bg-[#18181C] [html[data-theme=light]_&]:bg-white p-6 rounded-lg border border-white/10 [html[data-theme=light]_&]:border-gray-200 transition-colors duration-200">
-             <h4 class="text-lg font-bold text-white [html[data-theme=light]_&]:text-gray-900 mb-6 uppercase border-b-2 border-[#d71935] pb-2 inline-block transition-colors duration-200">Entradas Recientes</h4>
+             <h4 class="text-lg font-bold text-white [html[data-theme=light]_&]:text-gray-900 mb-6 uppercase border-b-2 border-red-primary pb-2 inline-block transition-colors duration-200">Entradas Recientes</h4>
              <div class="space-y-4">
                  @foreach($recentArticles as $recent)
                      <x-articles.article-list-item
                          :article="$recent"
                          :meta="$recent->published_at?->format('d M, Y')"
                          image-size="w-20 h-20"
-                         title-class="font-bold text-sm text-white [html[data-theme=light]_&]:text-gray-900 leading-tight hover:text-[#d71935] transition-colors duration-200"
+                         title-class="font-bold text-sm text-white [html[data-theme=light]_&]:text-gray-900 leading-tight hover:text-red-primary transition-colors duration-200"
                          class="items-start gap-3"
                      />
                  @endforeach

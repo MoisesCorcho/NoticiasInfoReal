@@ -1,5 +1,5 @@
 <div class="max-w-screen-xl mx-auto">
-    <header class="mb-12 border-b-2 border-[#d71935] pb-4">
+    <header class="mb-12 border-b-2 border-red-primary pb-4">
         <x-ui.category-breadcrumb :category="$category" class="text-sm text-gray-400 mb-2" />
         <h1 class="text-4xl font-bold text-white [html[data-theme=light]_&]:text-gray-900 uppercase transition-colors duration-200">
             {{ $category->name }}
@@ -19,7 +19,7 @@
                         {{ $article->published_at->format('d M, Y') }}
                     </div>
                     <h2 class="text-xl font-bold text-white [html[data-theme=light]_&]:text-gray-900 leading-tight mb-3 flex-1 transition-colors duration-200">
-                        <a href="{{ route('article.show', $article->slug) }}" class="hover:text-[#d71935] transition-colors">
+                        <a href="{{ route('article.show', $article->slug) }}" class="hover:text-red-primary transition-colors">
                             {{ $article->title }}
                         </a>
                     </h2>

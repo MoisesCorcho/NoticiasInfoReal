@@ -31,7 +31,7 @@
 
     <div class="p-4 flex flex-col flex-grow">
         <div class="flex items-center text-xs text-gray-500 [html[data-theme=light]_&]:text-gray-600 mb-2 transition-colors duration-200">
-            <span class="text-[#d71935] font-semibold mr-2">
+            <span class="text-red-primary font-semibold mr-2">
                 {{ $article->category->name ?? 'General' }}
             </span>
             @if($article->published_at)
@@ -39,7 +39,7 @@
             @endif
         </div>
         <h3 class="font-bold text-lg text-white [html[data-theme=light]_&]:text-gray-900 leading-snug mb-2 flex-grow transition-colors duration-200">
-            <a href="{{ route('article.show', $article->slug) }}" class="hover:text-[#d71935]">
+            <a href="{{ route('article.show', $article->slug) }}" class="hover:text-red-primary">
                 {{ $article->title }}
             </a>
         </h3>

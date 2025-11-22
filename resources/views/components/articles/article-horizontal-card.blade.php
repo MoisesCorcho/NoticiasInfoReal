@@ -24,7 +24,7 @@
     @endif
     <div class="flex-1">
         <div class="flex items-center gap-2 mb-2">
-            <span class="bg-[#d71935] text-white text-xs font-semibold px-2.5 py-0.5 rounded">
+            <span class="bg-red-primary text-white text-xs font-semibold px-2.5 py-0.5 rounded">
                 {{ $article->category->name ?? 'General' }}
             </span>
             @if($article->published_at)
@@ -32,14 +32,14 @@
             @endif
         </div>
         <h2 class="text-xl font-bold text-white [html[data-theme=light]_&]:text-gray-900 mb-2 leading-tight transition-colors duration-200">
-            <a href="{{ route('article.show', $article->slug) }}" class="hover:text-[#d71935]">
+            <a href="{{ route('article.show', $article->slug) }}" class="hover:text-red-primary">
                 {{ $article->title }}
             </a>
         </h2>
         @if($showExcerpt)
             <p class="text-gray-400 [html[data-theme=light]_&]:text-gray-600 mb-4 line-clamp-3 transition-colors duration-200">{{ $article->excerpt }}</p>
         @endif
-        <a href="{{ route('article.show', $article->slug) }}" class="text-[#d71935] font-semibold text-sm hover:underline">
+        <a href="{{ route('article.show', $article->slug) }}" class="text-red-primary font-semibold text-sm hover:underline">
             Leer más &rarr;
         </a>
     </div>

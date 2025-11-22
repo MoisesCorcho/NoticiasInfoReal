@@ -1,6 +1,6 @@
 <div class="max-w-4xl mx-auto">
     <h1 class="text-3xl font-bold text-white [html[data-theme=light]_&]:text-gray-900 mb-6 border-b border-white/10 [html[data-theme=light]_&]:border-gray-200 pb-4 transition-colors duration-200">
-        Resultados para: <span class="text-[#d71935]">"{{ $query }}"</span>
+        Resultados para: <span class="text-red-primary">"{{ $query }}"</span>
     </h1>
 
     @if($query)

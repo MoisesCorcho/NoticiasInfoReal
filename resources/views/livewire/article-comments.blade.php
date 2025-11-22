@@ -85,7 +85,7 @@
             </div>
 
             <button type="submit"
-                    class="bg-[#d71935] text-white px-6 py-2 rounded-md font-bold uppercase text-sm hover:bg-red-700 transition disabled:opacity-50"
+                    class="bg-red-primary text-white px-6 py-2 rounded-md font-bold uppercase text-sm hover:bg-red-700 transition disabled:opacity-50"
                     wire:loading.attr="disabled">
                 <span wire:loading.remove>Publicar Comentario</span>
                 <span wire:loading>Enviando...</span>

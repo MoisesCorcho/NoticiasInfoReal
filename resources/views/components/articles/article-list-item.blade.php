@@ -2,7 +2,7 @@
     'article',
     'meta' => null,
     'imageSize' => 'w-24 h-24',
-    'titleClass' => 'font-bold text-md text-white [html[data-theme=light]_&]:text-gray-900 hover:text-[#d71935] leading-tight transition-colors duration-200',
+    'titleClass' => 'font-bold text-md text-white [html[data-theme=light]_&]:text-gray-900 hover:text-red-primary leading-tight transition-colors duration-200',
     'linkClass' => '',
 ])
 

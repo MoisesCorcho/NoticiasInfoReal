@@ -4,7 +4,7 @@
     <div class="flex items-center justify-between mb-6 border-b border-white/10 [html[data-theme=light]_&]:border-gray-200 transition-colors duration-200">
         <h2 class="text-xl font-bold uppercase text-white [html[data-theme=light]_&]:text-gray-900 relative inline-block py-2 transition-colors duration-200">
             Últimas Noticias
-            <span class="absolute bottom-0 left-0 w-1/2 h-1 bg-[#d71935]"></span>
+            <span class="absolute bottom-0 left-0 w-1/2 h-1 bg-red-primary"></span>
         </h2>
     </div>
 
@@ -28,7 +28,7 @@
                     </div>
                 </a>
                 <div class="p-4 flex flex-col flex-grow">
-                    <span class="text-xs uppercase tracking-widest text-[#d71935] font-bold">
+                    <span class="text-xs uppercase tracking-widest text-red-primary font-bold">
                         {{ $article->category->name ?? 'General' }}
                     </span>
                     <h3 class="text-lg font-bold text-white [html[data-theme=light]_&]:text-gray-900 mt-2 leading-snug transition-colors duration-200">

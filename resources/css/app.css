@@ -8,6 +8,17 @@
 @theme {
     --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    
+    /* Colores de la paleta InfoReal */
+    --color-red-primary: #a60000;      /* Rojo principal (RGB: 166, 0, 0) */
+    --color-red-secondary: #7f0303;    /* Rojo secundario (RGB: 127, 3, 3) */
+    --color-black: #000000;             /* Negro */
+    --color-white: #ffffff;              /* Blanco */
+    
+    /* Colores dorados del gradiente (opcionales) */
+    --color-gold-dark: #b47a1a;         /* Dorado oscuro (RGB: 180, 122, 26) */
+    --color-gold-light: #ffec88;        /* Dorado claro (RGB: 255, 236, 136) */
+    --color-gold-medium: #ffe55a;       /* Dorado medio (RGB: 255, 229, 90) */
 }
 
 /* Dark mode configuration - modo oscuro es el default */

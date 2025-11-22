@@ -48,7 +48,7 @@
         <div class="flex-1 flex justify-end items-center gap-2">
             
             {{-- Botón Toggle Tema --}}
-            <button id="theme-toggle" class="p-3 text-[#d71935] hover:text-white [html[data-theme=light]_&]:hover:text-[#d71935] focus:outline-none transition-colors duration-200" aria-label="Cambiar tema">
+            <button id="theme-toggle" class="p-3 text-red-primary hover:text-white [html[data-theme=light]_&]:hover:text-red-primary focus:outline-none transition-colors duration-200" aria-label="Cambiar tema">
                 <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
                 </svg>
@@ -58,14 +58,14 @@
             </button>
             
             {{-- Botón Buscador --}}
-            <button @click="searchOpen = !searchOpen" class="p-3 text-[#d71935] hover:text-white [html[data-theme=light]_&]:hover:text-[#d71935] focus:outline-none transition-colors duration-200" aria-label="Buscar">
+            <button @click="searchOpen = !searchOpen" class="p-3 text-red-primary hover:text-white [html[data-theme=light]_&]:hover:text-red-primary focus:outline-none transition-colors duration-200" aria-label="Buscar">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
             </button>
             
             {{-- Botón Menú Hamburguesa --}}
-            <button @click="mobileMenuOpen = true" class="p-3 text-gray-400 [html[data-theme=light]_&]:text-gray-600 hover:text-white [html[data-theme=light]_&]:hover:text-gray-900 focus:outline-none bg-[#333233] [html[data-theme=light]_&]:bg-gray-100 hover:bg-[#d71935] rounded-md transition-colors duration-200" aria-label="Abrir menú">
+            <button @click="mobileMenuOpen = true" class="p-3 text-gray-400 [html[data-theme=light]_&]:text-gray-600 hover:text-white [html[data-theme=light]_&]:hover:text-gray-900 focus:outline-none bg-[#333233] [html[data-theme=light]_&]:bg-gray-100 hover:bg-red-primary rounded-md transition-colors duration-200" aria-label="Abrir menú">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
@@ -74,7 +74,7 @@
     </div>
 
     {{-- Línea roja que cubre todo el ancho --}}
-    <div class="w-full h-0.5 bg-[#d71935]"></div>
+    <div class="w-full h-0.5 bg-red-primary"></div>
 
     {{-- 
       BARRA DE CATEGORÍAS 
@@ -85,7 +85,7 @@
                 {{-- Enlace de Home --}}
                 <a href="{{ route('home') }}" 
                    class="relative flex items-center h-full font-medium text-sm tracking-[0.32em] uppercase px-4 transition-colors duration-200
-                          {{ request()->is('/') ? 'text-white bg-[#d71935]' : 'text-gray-400 [html[data-theme=light]_&]:text-gray-600 hover:text-white [html[data-theme=light]_&]:hover:text-gray-900 hover:bg-[#d71935]' }}">
+                          {{ request()->is('/') ? 'text-white bg-red-primary' : 'text-gray-400 [html[data-theme=light]_&]:text-gray-600 hover:text-white [html[data-theme=light]_&]:hover:text-gray-900 hover:bg-red-primary' }}">
                     Home
                 </a>
 
@@ -94,7 +94,7 @@
                     <div class="static group h-full">
                         <a href="{{ route('category.show', $category->slug) }}" 
                            class="relative flex items-center h-full font-medium text-sm tracking-[0.32em] uppercase px-4 transition-colors duration-200
-                                  {{ (request()->routeIs('category.show') && request()->route('slug') === $category->slug) ? 'text-white bg-[#d71935]' : 'text-gray-400 [html[data-theme=light]_&]:text-gray-600 group-hover:text-white [html[data-theme=light]_&]:group-hover:text-gray-900 group-hover:bg-[#d71935]' }}">
+                                  {{ (request()->routeIs('category.show') && request()->route('slug') === $category->slug) ? 'text-white bg-red-primary' : 'text-gray-400 [html[data-theme=light]_&]:text-gray-600 group-hover:text-white [html[data-theme=light]_&]:group-hover:text-gray-900 group-hover:bg-red-primary' }}">
                             {{ $category->name }}
                         </a>
 
@@ -116,7 +116,7 @@
                                                 @endif
                                                 <div class="p-4 flex flex-col gap-2">
                                                     <span class="text-xs uppercase tracking-widest text-gray-400 [html[data-theme=light]_&]:text-gray-500">{{ $category->name }}</span>
-                                                    <p class="text-sm font-semibold text-white [html[data-theme=light]_&]:text-gray-900 leading-snug line-clamp-3 group-hover/article:underline decoration-[#d71935] decoration-2 underline-offset-2 transition-colors duration-200">
+                                                    <p class="text-sm font-semibold text-white [html[data-theme=light]_&]:text-gray-900 leading-snug line-clamp-3 group-hover/article:underline decoration-red-primary decoration-2 underline-offset-2 transition-colors duration-200">
                                                         {{ $article->title }}
                                                     </p>
                                                     @if ($article->published_at)
@@ -160,7 +160,7 @@
                     class="w-full rounded-r-none border-r-0"
                     autofocus 
                 />
-                <button type="submit" class="bg-[#d71935] text-white px-4 hover:bg-red-700 transition-colors rounded-l-none rounded-r-md flex items-center cursor-pointer">
+                <button type="submit" class="bg-red-primary text-white px-4 hover:bg-red-700 transition-colors rounded-l-none rounded-r-md flex items-center cursor-pointer">
                     <span class="hidden md:inline mr-2">Buscar</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
