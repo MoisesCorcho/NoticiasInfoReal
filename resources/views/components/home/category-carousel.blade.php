@@ -22,7 +22,7 @@
     {{-- Título de la sección (dinámico) --}}
     <div class="flex items-center mb-6">
         {{-- Línea izquierda --}}
-        <div class="flex-grow bg-[#d71935] h-1"></div>
+        <div class="flex-grow bg-[#d71935] h-0.5"></div>
 
         {{-- Título --}}
         <h2 class="text-lg font-bold uppercase text-white [html[data-theme=light]_&]:text-gray-900 mx-4 flex-shrink-0 transition-colors duration-200">
@@ -30,7 +30,7 @@
         </h2>
 
         {{-- Línea derecha --}}
-        <div class="flex-grow bg-[#d71935] h-1"></div>
+        <div class="flex-grow bg-[#d71935] h-0.5"></div>
     </div>
 
     {{-- Contenedor del Carrusel --}}

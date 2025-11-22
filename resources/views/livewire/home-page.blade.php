@@ -4,6 +4,9 @@
         <x-home.hero-section :articles="$heroArticles" />
     @endif
 
+    {{-- WIDGET DE BÚSQUEDA --}}
+    <livewire:search-widget />
+
     {{-- SECCIÓN 2: ÚLTIMAS NOTICIAS (Grid estándar) --}}
     @if ($latestArticles->isNotEmpty())
         <x-home.latest-news :articles="$latestArticles" />

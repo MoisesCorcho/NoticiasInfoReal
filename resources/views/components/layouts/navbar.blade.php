@@ -23,7 +23,7 @@
 
         {{-- Lado Izquierdo: Logo --}}
         <div class="flex-1 flex justify-start items-center">
-            <a href="{{ route('home') }}" class="block relative pb-2 border-b-2 border-[#d71935]">
+            <a href="{{ route('home') }}" class="block">
                 <span class="sr-only">{{ config('app.name') }}</span>
                 <img
                     src="{{ asset('images/new_logos/Logo InfoReal 23.png') }}"
@@ -48,8 +48,8 @@
         <div class="flex-1 flex justify-end items-center gap-2">
             
             {{-- Botón Toggle Tema --}}
-            <button id="theme-toggle" class="p-2 text-[#d71935] hover:text-white [html[data-theme=light]_&]:hover:text-[#d71935] focus:outline-none transition-colors duration-200" aria-label="Cambiar tema">
-                <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <button id="theme-toggle" class="p-3 text-[#d71935] hover:text-white [html[data-theme=light]_&]:hover:text-[#d71935] focus:outline-none transition-colors duration-200" aria-label="Cambiar tema">
+                <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
                 </svg>
                 <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden">
@@ -58,25 +58,28 @@
             </button>
             
             {{-- Botón Buscador --}}
-            <button @click="searchOpen = !searchOpen" class="p-2 text-[#d71935] hover:text-white [html[data-theme=light]_&]:hover:text-[#d71935] focus:outline-none transition-colors duration-200" aria-label="Buscar">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <button @click="searchOpen = !searchOpen" class="p-3 text-[#d71935] hover:text-white [html[data-theme=light]_&]:hover:text-[#d71935] focus:outline-none transition-colors duration-200" aria-label="Buscar">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
             </button>
             
             {{-- Botón Menú Hamburguesa --}}
-            <button @click="mobileMenuOpen = true" class="p-2 text-gray-400 [html[data-theme=light]_&]:text-gray-600 hover:text-white [html[data-theme=light]_&]:hover:text-gray-900 focus:outline-none bg-[#333233] [html[data-theme=light]_&]:bg-gray-100 hover:bg-[#d71935] rounded-md transition-colors duration-200" aria-label="Abrir menú">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+            <button @click="mobileMenuOpen = true" class="p-3 text-gray-400 [html[data-theme=light]_&]:text-gray-600 hover:text-white [html[data-theme=light]_&]:hover:text-gray-900 focus:outline-none bg-[#333233] [html[data-theme=light]_&]:bg-gray-100 hover:bg-[#d71935] rounded-md transition-colors duration-200" aria-label="Abrir menú">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
             </button>
         </div>
     </div>
 
+    {{-- Línea roja que cubre todo el ancho --}}
+    <div class="w-full h-0.5 bg-[#d71935]"></div>
+
     {{-- 
       BARRA DE CATEGORÍAS 
     --}}
-    <nav class="hidden md:block border-t border-white/10 [html[data-theme=light]_&]:border-gray-200 transition-colors duration-200">
+    <nav class="hidden md:block border-t border-white/10 [html[data-theme=light]_&]:border-gray-200 transition-colors duration-200 mt-1">
         <div class="max-w-screen-xl mx-auto px-4">
             <div class="flex items-stretch justify-start h-12 bg-[#333233] [html[data-theme=light]_&]:bg-gray-100 relative transition-colors duration-200">
                 {{-- Enlace de Home --}}
