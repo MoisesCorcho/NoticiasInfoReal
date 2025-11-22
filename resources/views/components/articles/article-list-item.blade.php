@@ -2,7 +2,7 @@
     'article',
     'meta' => null,
     'imageSize' => 'w-24 h-24',
-    'titleClass' => 'font-bold text-md text-white hover:text-[#d71935] leading-tight',
+    'titleClass' => 'font-bold text-md text-white [html[data-theme=light]_&]:text-gray-900 hover:text-red-primary leading-tight transition-colors duration-200',
     'linkClass' => '',
 ])
 
@@ -28,7 +28,7 @@
             </a>
         </h4>
         @if($meta)
-            <p class="text-xs text-gray-500 mt-1">
+            <p class="text-xs text-gray-500 [html[data-theme=light]_&]:text-gray-600 mt-1 transition-colors duration-200">
                 {{ $meta }}
             </p>
         @endif

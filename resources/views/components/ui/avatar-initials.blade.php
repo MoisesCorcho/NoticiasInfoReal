@@ -1,8 +1,8 @@
 @props([
     'name',
     'classes' => 'w-10 h-10 text-base',
-    'background' => 'bg-[#333233]',
-    'textColor' => 'text-gray-300',
+    'background' => 'bg-[#333233] [html[data-theme=light]_&]:bg-gray-200',
+    'textColor' => 'text-gray-300 [html[data-theme=light]_&]:text-gray-700',
 ])
 
 @php

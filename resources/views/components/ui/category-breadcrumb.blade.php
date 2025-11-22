@@ -1,7 +1,7 @@
 @props([
     'category',
     'separator' => ' > ',
-    'class' => 'text-sm text-gray-400',
+    'class' => 'text-sm text-gray-400 [html[data-theme=light]_&]:text-gray-600',
 ])
 
 @php
@@ -13,14 +13,14 @@
     <ol class="flex flex-wrap items-center">
         @foreach ($ancestors as $index => $ancestor)
             <li class="inline-flex items-center">
-                <a href="{{ route('category.show', $ancestor->slug) }}" class="hover:text-white">
+                <a href="{{ route('category.show', $ancestor->slug) }}" class="hover:text-white [html[data-theme=light]_&]:hover:text-gray-900 transition-colors">
                     {{ $ancestor->name }}
                 </a>
             </li>
             <li class="mx-2 select-none">{{ $separator }}</li>
         @endforeach
-        <li class="inline-flex items-center text-white">
-            <a href="{{ route('category.show', $category->slug) }}" class="hover:text-white">
+        <li class="inline-flex items-center text-white [html[data-theme=light]_&]:text-gray-900 transition-colors">
+            <a href="{{ route('category.show', $category->slug) }}" class="hover:text-white [html[data-theme=light]_&]:hover:text-gray-900 transition-colors">
                 {{ $category->name }}
             </a>
         </li>

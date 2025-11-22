@@ -12,15 +12,15 @@
     {{-- Título de la sección (Estilo "Sports" con línea) --}}
     <div class="flex items-center mb-6">
         {{-- Línea izquierda --}}
-        <div class="flex-grow bg-[#d71935] h-2"></div>
+        <div class="flex-grow bg-red-primary h-0.5"></div>
 
         {{-- Título --}}
-        <h2 class="text-lg font-bold uppercase text-white mx-4 flex-shrink-0">
+        <h2 class="text-lg font-bold uppercase text-white [html[data-theme=light]_&]:text-gray-900 mx-4 flex-shrink-0 transition-colors duration-200">
             {{ $title }}
         </h2>
 
         {{-- Línea derecha --}}
-        <div class="flex-grow bg-[#d71935] h-2"></div>
+        <div class="flex-grow bg-red-primary h-0.5"></div>
     </div>
 
     @if ($articles->isNotEmpty())
@@ -36,21 +36,21 @@
                                  onerror="this.src='https://placehold.co/400x300/18181C/333233?text=Error'"
                                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                             
-                            <span class="absolute top-3 left-3 inline-block bg-[#d71935] text-white text-[10px] font-bold px-1.5 py-0.5 rounded z-10">
+                            <span class="absolute top-3 left-3 inline-block bg-red-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded z-10">
                                 {{ $article->category->name }}
                             </span>
                         </div>
                     </a>
                     <div class="mt-3">
-                        <h3 class="text-lg font-bold text-white leading-tight group-hover:text-[#d71935] transition-colors duration-300 line-clamp-2">
+                        <h3 class="text-lg font-bold text-white [html[data-theme=light]_&]:text-gray-900 leading-tight group-hover:text-red-primary transition-colors duration-300 line-clamp-2">
                             <a href="{{ route('article.show', $article->slug) }}">{{ $article->title }}</a>
                         </h3>
-                        <span class="text-gray-500 text-xs mt-1">{{ $article->published_at->translatedFormat('j M, Y') }}</span>
+                        <span class="text-gray-500 [html[data-theme=light]_&]:text-gray-600 text-xs mt-1 transition-colors duration-200">{{ $article->published_at->translatedFormat('j M, Y') }}</span>
                     </div>
                 </div>
             @endforeach
         </div>
     @else
-        <p class="text-gray-500">No hay artículos disponibles para "{{ $title }}".</p>
+        <p class="text-gray-500 [html[data-theme=light]_&]:text-gray-600 transition-colors duration-200">No hay artículos disponibles para "{{ $title }}".</p>
     @endif
 </section>
