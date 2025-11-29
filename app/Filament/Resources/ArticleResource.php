@@ -84,6 +84,7 @@ class ArticleResource extends Resource
                                         Forms\Components\FileUpload::make('featured_image_url')
                                             ->label('Imagen destacada')
                                             ->image()
+                                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
                                             ->required()
                                             ->directory('articles/featured')
                                             ->imageEditor(),
@@ -91,11 +92,13 @@ class ArticleResource extends Resource
                                         Forms\Components\Select::make('status')
                                             ->label('Estado')
                                             ->options(EnumArticleStatus::labels())
+                                            ->default(EnumArticleStatus::Published->value)
                                             ->required()
                                             ->native(false),
 
                                         Forms\Components\DateTimePicker::make('published_at')
                                             ->label('Fecha de publicación')
+                                            ->default(now())
                                             ->native(false),
 
                                         Forms\Components\Toggle::make('allows_comments')
@@ -106,13 +109,31 @@ class ArticleResource extends Resource
                                 Section::make('Asociaciones')
                                     ->schema([
                                         Forms\Components\Select::make('user_id')
-                                            ->relationship('author', 'name')
+                                            ->relationship('author', 'name', fn(Builder $query) => $query->where('email', '!=', 'admin@admin.com'))
                                             ->searchable()
                                             ->preload()
                                             ->label('Autor')
-                                            ->required(),
+                                            ->required()
+                                            ->createOptionForm([
+                                                Forms\Components\TextInput::make('name')
+                                                    ->label('Nombre')
+                                                    ->required()
+                                                    ->maxLength(255),
+                                                Forms\Components\TextInput::make('email')
+                                                    ->label('Email')
+                                                    ->email()
+                                                    ->required()
+                                                    ->unique('users', 'email')
+                                                    ->maxLength(255),
+                                                Forms\Components\TextInput::make('password')
+                                                    ->label('Contraseña')
+                                                    ->password()
+                                                    ->required()
+                                                    ->maxLength(255),
+                                            ]),
 
                                         Forms\Components\Select::make('category_id')
+                                            ->label('Categoría')
                                             ->relationship('category', 'name')
                                             ->searchable()
                                             ->preload()
