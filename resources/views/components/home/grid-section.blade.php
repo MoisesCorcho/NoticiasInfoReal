@@ -16,8 +16,12 @@
 
         {{-- Título --}}
         <h2
-            class="text-lg font-bold uppercase text-white [html[data-theme=light]_&]:text-gray-900 mx-4 flex-shrink-0 transition-colors duration-200">
-            {{ $title }}
+            class="text-lg font-bold uppercase text-white [html[data-theme=light]_&]:text-gray-900 mx-4 flex-shrink-0 transition-colors duration-200 flex items-center gap-2">
+            <img src="{{ asset('images/logos/Isotipo InfoReal Blanco.png') }}" alt="InfoReal"
+                class="h-6 w-auto [html[data-theme=light]_&]:hidden">
+            <img src="{{ asset('images/logos/Isotipo InfoReal Negro.png') }}" alt="InfoReal"
+                class="h-6 w-auto hidden [html[data-theme=light]_&]:block">
+            <span>InfoReal {{ $title }}</span>
         </h2>
 
         {{-- Línea derecha --}}
