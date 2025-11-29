@@ -14,37 +14,15 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            [
-                'name' => 'Política',
-                'children' => [
-                    'Política Nacional',
-                    'Política Internacional',
-                ],
-            ],
-            [
-                'name' => 'Economía',
-            ],
-            [
-                'name' => 'Deportes',
-                'children' => [
-                    [
-                        'name' => 'Fútbol Profesional',
-                        'children' => [
-                            'Liga Profesional',
-                            'Selección Nacional',
-                        ],
-                    ],
-                ],
-            ],
-            [
-                'name' => 'Tecnología',
-            ],
-            [
-                'name' => 'Cultura',
-                'children' => [
-                    'Arte y Patrimonio',
-                ],
-            ],
+            ['name' => 'Política'],
+            ['name' => 'Sociedad'],
+            ['name' => 'Cultura'],
+            ['name' => 'Deportes'],
+            ['name' => 'Entretenimiento'],
+            ['name' => 'Opinión'],
+            ['name' => 'Educación y Ciencia'],
+            ['name' => 'Economía y Empresa'],
+            ['name' => 'Ambiental'],
         ];
 
         foreach ($categories as $categoryData) {
