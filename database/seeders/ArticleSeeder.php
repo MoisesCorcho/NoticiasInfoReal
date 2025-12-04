@@ -26,7 +26,7 @@ class ArticleSeeder extends Seeder
         $authors = User::factory()->count(5)->create();
 
         Article::factory()
-            ->count(50)
+            ->count(200)
             ->published()
             ->state(fn() => [
                 'user_id' => $authors->random()->id,

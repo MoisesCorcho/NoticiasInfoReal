@@ -6,6 +6,37 @@
     <title>{{ $title ?? config('app.name') }}</title>
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/logos/Isotipo InfoReal Rojo.png') }}">
 
+    {{-- Meta tags Open Graph para compartir en redes sociales --}}
+    @if(isset($article) && $article instanceof \App\Models\Article)
+        @php
+            $articleUrl = route('article.show', $article->slug);
+            $articleImage = $article->featured_image_url 
+                ? url(\Illuminate\Support\Facades\Storage::url($article->featured_image_url)) 
+                : url(asset('images/logos/Isotipo InfoReal Rojo.png'));
+            $articleDescription = $article->excerpt ?? $article->title;
+        @endphp
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="{{ $article->title }}">
+        <meta property="og:description" content="{{ $articleDescription }}">
+        <meta property="og:image" content="{{ $articleImage }}">
+        <meta property="og:url" content="{{ $articleUrl }}">
+        <meta property="og:site_name" content="{{ config('app.name') }}">
+        
+        {{-- Twitter Card --}}
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ $article->title }}">
+        <meta name="twitter:description" content="{{ $articleDescription }}">
+        <meta name="twitter:image" content="{{ $articleImage }}">
+    @else
+        {{-- Meta tags por defecto para otras páginas --}}
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{{ config('app.name') }}">
+        <meta property="og:description" content="{{ config('app.name') }}">
+        <meta property="og:image" content="{{ url(asset('images/logos/Isotipo InfoReal Rojo.png')) }}">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:site_name" content="{{ config('app.name') }}">
+    @endif
+
     <!-- Swiper.js CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 

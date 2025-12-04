@@ -90,7 +90,6 @@ class HomepageSectionResource extends Resource
                     ->label('Título Público')
                     ->searchable()
                     ->placeholder('—')
-                    ->description(fn (HomepageSection $record): string => $record->display_title ? 'Personalizado' : 'Por defecto (Nombre Categoría)')
                     ->color('gray'),
 
                 // 3. LAYOUT (Columna nueva profesional)

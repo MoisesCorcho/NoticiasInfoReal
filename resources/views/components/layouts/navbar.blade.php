@@ -26,7 +26,7 @@ Contenedor principal del header
         <div class="flex-1 flex justify-start items-center">
             <a href="{{ route('home') }}" class="block">
                 <span class="sr-only">{{ config('app.name') }}</span>
-                <img src="{{ asset('images/new_logos/Logo InfoReal 23.png') }}" alt="InfoReal"
+                <img src="{{ asset('images/new_logos/Logo InfoReal Horizontal blanco-01.png') }}" alt="InfoReal"
                     class="h-18 w-auto [html[data-theme=light]_&]:hidden" width="224" height="64" decoding="async" />
                 <img src="{{ asset('images/new_logos/Logo InfoReal Horizontal negro-01.png') }}" alt="InfoReal"
                     class="h-18 w-auto hidden [html[data-theme=light]_&]:block" width="224" height="64"
@@ -84,32 +84,28 @@ Contenedor principal del header
     BARRA DE CATEGORÍAS
     --}}
     <nav
-        class="hidden md:block border-t border-white/10 [html[data-theme=light]_&]:border-gray-200 transition-colors duration-200 mt-1">
+        class="hidden lg:block border-t border-white/10 [html[data-theme=light]_&]:border-gray-200 transition-colors duration-200 mt-1">
         <div class="max-w-screen-xl mx-auto px-4">
             <div
                 class="flex items-stretch justify-start h-12 bg-[#333233] [html[data-theme=light]_&]:bg-gray-100 relative transition-colors duration-200">
                 {{-- Enlace de Home --}}
                 <a href="{{ route('home') }}"
-                    class="relative flex items-center h-full font-medium text-sm tracking-[0.15em] uppercase px-4 transition-colors duration-200
+                    class="relative flex items-center h-full font-medium text-xs tracking-[0.15em] uppercase px-2 transition-colors duration-200
                           {{ request()->is('/') ? 'text-white bg-red-primary' : 'text-gray-400 [html[data-theme=light]_&]:text-gray-600 hover:text-white [html[data-theme=light]_&]:hover:text-gray-900 hover:bg-red-primary' }}">
                     Inicio
                 </a>
 
                 @php
                     $total = $rootCategories->count();
-                    $mainCategories = $rootCategories->take(7);
-                    $overflowCategories = $rootCategories->skip(7);
+                    $mainCategories = $rootCategories->take(9);
+                    $overflowCategories = $rootCategories->skip(9);
                 @endphp
 
-                {{-- Bucle de Categorías Visibles (Responsive) --}}
+                {{-- Bucle de Categorías Visibles (hasta 9 categorías) --}}
                 @foreach ($mainCategories as $category)
-                    @php $index = $loop->index; @endphp
-                    <div class="static group h-full
-                            {{ $index == 3 ? 'hidden lg:block' : '' }}
-                            {{ $index >= 4 ? 'hidden xl:block' : '' }}
-                        ">
+                    <div class="static group h-full">
                         <a href="{{ route('category.show', $category->slug) }}"
-                            class="relative flex items-center h-full font-medium text-sm tracking-[0.15em] uppercase px-4 transition-colors duration-200
+                            class="relative flex items-center h-full font-medium text-xs tracking-[0.15em] uppercase px-2 transition-colors duration-200
                                            {{ (request()->routeIs('category.show') && request()->route('slug') === $category->slug) ? 'text-white bg-red-primary' : 'text-gray-400 [html[data-theme=light]_&]:text-gray-600 group-hover:text-white [html[data-theme=light]_&]:group-hover:text-gray-900 group-hover:bg-red-primary' }}">
                             {{ $category->name }}
                         </a>
@@ -155,14 +151,11 @@ Contenedor principal del header
                     </div>
                 @endforeach
 
-                {{-- Dropdown "MÁS" (Responsive) --}}
-                @if ($total > 3)
-                    <div class="relative group h-full
-                            {{ $total <= 4 ? 'lg:hidden' : '' }}
-                            {{ $total <= 7 ? 'xl:hidden' : '' }}
-                        ">
+                {{-- Dropdown "MÁS" (Solo aparece cuando hay más de 9 categorías) --}}
+                @if ($total > 9)
+                    <div class="relative group h-full">
                         <button
-                            class="relative flex items-center h-full font-medium text-sm tracking-[0.15em] uppercase px-4 transition-colors duration-200 text-gray-400 [html[data-theme=light]_&]:text-gray-600 group-hover:text-white [html[data-theme=light]_&]:group-hover:text-gray-900 group-hover:bg-red-primary">
+                            class="relative flex items-center h-full font-medium text-xs tracking-[0.15em] uppercase px-2 transition-colors duration-200 text-gray-400 [html[data-theme=light]_&]:text-gray-600 group-hover:text-white [html[data-theme=light]_&]:group-hover:text-gray-900 group-hover:bg-red-primary">
                             Más
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-4 h-4 ml-1">
@@ -173,28 +166,10 @@ Contenedor principal del header
                         <div
                             class="absolute top-full right-0 w-64 bg-[#333233] [html[data-theme=light]_&]:bg-white border border-white/10 [html[data-theme=light]_&]:border-gray-200 shadow-2xl rounded-b-xl overflow-hidden z-40 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200">
                             <div class="py-2">
-                                {{-- Categoría 3 (Visible en MD, Oculto en LG+) --}}
-                                @if(isset($rootCategories[3]))
-                                    <a href="{{ route('category.show', $rootCategories[3]->slug) }}"
-                                        class="block px-4 py-3 text-sm font-medium tracking-[0.15em] uppercase transition-colors duration-200 lg:hidden
-                                                      {{ (request()->routeIs('category.show') && request()->route('slug') === $rootCategories[3]->slug) ? 'text-white bg-red-primary' : 'text-gray-400 [html[data-theme=light]_&]:text-gray-600 hover:text-white [html[data-theme=light]_&]:hover:text-gray-900 hover:bg-red-primary' }}">
-                                        {{ $rootCategories[3]->name }}
-                                    </a>
-                                @endif
-
-                                {{-- Categorías 4-6 (Visible en MD/LG, Oculto en XL+) --}}
-                                @foreach ($rootCategories->slice(4, 3) as $category)
-                                    <a href="{{ route('category.show', $category->slug) }}"
-                                        class="block px-4 py-3 text-sm font-medium tracking-[0.15em] uppercase transition-colors duration-200 xl:hidden
-                                                      {{ (request()->routeIs('category.show') && request()->route('slug') === $category->slug) ? 'text-white bg-red-primary' : 'text-gray-400 [html[data-theme=light]_&]:text-gray-600 hover:text-white [html[data-theme=light]_&]:hover:text-gray-900 hover:bg-red-primary' }}">
-                                        {{ $category->name }}
-                                    </a>
-                                @endforeach
-
-                                {{-- Categorías 7+ (Siempre visibles en dropdown) --}}
+                                {{-- Categorías 9+ (Solo las que exceden las 9 principales) --}}
                                 @foreach ($overflowCategories as $category)
                                     <a href="{{ route('category.show', $category->slug) }}"
-                                        class="block px-4 py-3 text-sm font-medium tracking-[0.15em] uppercase transition-colors duration-200
+                                        class="block px-4 py-3 text-xs font-medium tracking-[0.15em] uppercase transition-colors duration-200
                                                       {{ (request()->routeIs('category.show') && request()->route('slug') === $category->slug) ? 'text-white bg-red-primary' : 'text-gray-400 [html[data-theme=light]_&]:text-gray-600 hover:text-white [html[data-theme=light]_&]:hover:text-gray-900 hover:bg-red-primary' }}">
                                         {{ $category->name }}
                                     </a>

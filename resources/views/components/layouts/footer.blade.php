@@ -14,7 +14,7 @@
             {{-- Columna 1: Sobre Nosotros --}}
             <div class="col-span-1 md:col-span-2">
                 <div class="mb-4">
-                    <img src="{{ asset('images/new_logos/Logo InfoReal 23.png') }}" alt="InfoReal"
+                    <img src="{{ asset('images/new_logos/Logo InfoReal Horizontal blanco-01.png') }}" alt="InfoReal"
                         class="h-18 w-auto [html[data-theme=light]_&]:hidden" width="224" height="64"
                         decoding="async" />
                     <img src="{{ asset('images/new_logos/Logo InfoReal Horizontal blanco-01.png') }}" alt="InfoReal"
