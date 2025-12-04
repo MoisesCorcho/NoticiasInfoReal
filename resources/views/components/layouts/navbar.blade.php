@@ -84,7 +84,7 @@ Contenedor principal del header
     BARRA DE CATEGORÍAS
     --}}
     <nav
-        class="hidden md:block border-t border-white/10 [html[data-theme=light]_&]:border-gray-200 transition-colors duration-200 mt-1">
+        class="hidden lg:block border-t border-white/10 [html[data-theme=light]_&]:border-gray-200 transition-colors duration-200 mt-1">
         <div class="max-w-screen-xl mx-auto px-4">
             <div
                 class="flex items-stretch justify-start h-12 bg-[#333233] [html[data-theme=light]_&]:bg-gray-100 relative transition-colors duration-200">
