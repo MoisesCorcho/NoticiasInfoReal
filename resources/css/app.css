@@ -30,3 +30,10 @@
 :root[data-theme="light"] {
     color-scheme: light;
 }
+
+/* Fix for image spacing in prose content */
+.prose img {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    display: block; /* Ensure it behaves as a block element */
+}
