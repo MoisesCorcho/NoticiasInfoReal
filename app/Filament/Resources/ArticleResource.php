@@ -204,10 +204,12 @@ class ArticleResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label('Estado')
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => EnumArticleStatus::labels()[$state] ?? $state)
                     ->color(fn (string $state): string => match ($state) {
                         EnumArticleStatus::Draft->value => 'gray',
                         EnumArticleStatus::Scheduled->value => 'warning',
                         EnumArticleStatus::Published->value => 'success',
+                        default => 'gray',
                     }),
 
                 Tables\Columns\TextColumn::make('published_at')
