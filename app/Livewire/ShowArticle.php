@@ -9,6 +9,7 @@ use Illuminate\View\View;
 class ShowArticle extends Component
 {
     public Article $article;
+    public string $layout = 'components.layouts.app';
 
     // Usamos mount para cargar el artículo por slug al iniciar el componente
     public function mount($slug): void
@@ -47,10 +48,16 @@ class ShowArticle extends Component
             ->first();
 
         // Puede que salga error linter por el title, pero se puede ignorar.
+        // Compartir el artículo con el layout para las meta tags
+        view()->share([
+            'article' => $this->article,
+            'title' => $this->article->title . ' - '. config('app.name'),
+        ]);
+        
         return view('livewire.show-article', [
             'recentArticles' => $recentArticles,
             'previousArticle' => $previousArticle,
             'nextArticle' => $nextArticle,
-        ])->title($this->article->title . ' - '. config('app.name')); // Establece el título de la página
+        ]);
     }
 }
