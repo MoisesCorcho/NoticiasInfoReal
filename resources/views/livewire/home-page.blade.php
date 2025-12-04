@@ -7,18 +7,12 @@
     {{-- WIDGET DE BÚSQUEDA --}}
     <livewire:search-widget />
 
-    {{-- SECCIÓN 2: ÚLTIMAS NOTICIAS (Grid estándar) --}}
-    @if ($latestArticles->isNotEmpty())
-        <x-home.latest-news :articles="$latestArticles" />
-    @endif
+    {{-- SECCIÓN 2: SECCIONES DE PORTADA (Carrusel) --}}
+    @php
+        use App\Enums\EnumHomepageSectionLayout;
+    @endphp
 
-    {{-- SECCIÓN 3: SECCIONES DE PORTADA (Carrusel) --}}
-
-@php
-    use App\Enums\EnumHomepageSectionLayout;
-@endphp
-
-@if ($homepageSectionsData->isNotEmpty())
+    @if ($homepageSectionsData->isNotEmpty())
         @foreach ($homepageSectionsData as $data)
             {{-- Solo renderizar si la sección tiene artículos --}}
             @if ($data['articles']->isNotEmpty())
@@ -56,5 +50,10 @@
             
             @endif
         @endforeach
+    @endif
+
+    {{-- SECCIÓN 3: ÚLTIMAS NOTICIAS (Grid estándar) --}}
+    @if ($latestArticles->isNotEmpty())
+        <x-home.latest-news :articles="$latestArticles" />
     @endif
 </div>

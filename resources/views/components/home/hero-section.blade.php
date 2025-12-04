@@ -26,6 +26,8 @@
             @else
                 <div class="w-full h-full bg-[#18181C] [html[data-theme=light]_&]:bg-gray-100 flex items-center justify-center text-gray-500 [html[data-theme=light]_&]:text-gray-600">Sin Imagen</div>
             @endif
+            
+            <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent [html[data-theme=light]_&]:from-white/90 [html[data-theme=light]_&]:via-white/60 [html[data-theme=light]_&]:to-transparent w-full transition-colors duration-200"></div>
         </div>
 
         <p class="text-gray-300 [html[data-theme=light]_&]:text-gray-700 leading-relaxed">

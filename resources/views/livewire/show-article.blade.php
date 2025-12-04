@@ -87,8 +87,8 @@
                             <img src="{{ Storage::url($previousArticle->featured_image_url) }}" alt="{{ $previousArticle->title }}" class="w-20 h-20 object-cover rounded-md mr-4 shrink-0 hidden sm:block">
                         @endif
                         <div>
-                            <span class="block text-xs text-gray-400 [html[data-theme=light]_&]:text-gray-600 uppercase mb-1 group-hover:text-red-primary transition-colors">&larr; Anterior</span>
-                            <h4 class="font-bold text-white [html[data-theme=light]_&]:text-gray-900 leading-tight line-clamp-2 group-hover:text-red-primary transition-colors">
+                            <span class="block text-xs text-gray-400 [html[data-theme=light]_&]:text-gray-600 uppercase mb-1 group-hover:text-red-primary [html[data-theme=light]_&]:group-hover:text-red-primary transition-colors">&larr; Anterior</span>
+                            <h4 class="font-bold text-white [html[data-theme=light]_&]:text-gray-900 leading-tight line-clamp-2 group-hover:text-red-primary [html[data-theme=light]_&]:group-hover:text-red-primary transition-colors">
                                 {{ $previousArticle->title }}
                             </h4>
                         </div>
@@ -101,8 +101,8 @@
                 @if($nextArticle)
                     <a href="{{ route('article.show', $nextArticle->slug) }}" class="flex items-center justify-end text-right bg-[#18181C] [html[data-theme=light]_&]:bg-white p-4 rounded-lg border border-white/10 [html[data-theme=light]_&]:border-gray-200 hover:bg-[#333233] [html[data-theme=light]_&]:hover:bg-gray-100 transition-colors h-full group">
                         <div>
-                            <span class="block text-xs text-gray-400 [html[data-theme=light]_&]:text-gray-600 uppercase mb-1 group-hover:text-red-primary transition-colors">Siguiente &rarr;</span>
-                            <h4 class="font-bold text-white [html[data-theme=light]_&]:text-gray-900 leading-tight line-clamp-2 group-hover:text-red-primary transition-colors">
+                            <span class="block text-xs text-gray-400 [html[data-theme=light]_&]:text-gray-600 uppercase mb-1 group-hover:text-red-primary [html[data-theme=light]_&]:group-hover:text-red-primary transition-colors">Siguiente &rarr;</span>
+                            <h4 class="font-bold text-white [html[data-theme=light]_&]:text-gray-900 leading-tight line-clamp-2 group-hover:text-red-primary [html[data-theme=light]_&]:group-hover:text-red-primary transition-colors">
                                 {{ $nextArticle->title }}
                             </h4>
                         </div>
@@ -133,7 +133,7 @@
                          :article="$recent"
                          :meta="$recent->published_at?->format('d M, Y')"
                          image-size="w-20 h-20"
-                         title-class="font-bold text-sm text-white [html[data-theme=light]_&]:text-gray-900 leading-tight hover:text-red-primary transition-colors duration-200"
+                         title-class="font-bold text-sm text-white [html[data-theme=light]_&]:text-gray-900 leading-tight hover:text-red-primary [html[data-theme=light]_&]:hover:text-red-primary transition-colors duration-200"
                          class="items-start gap-3"
                      />
                  @endforeach
