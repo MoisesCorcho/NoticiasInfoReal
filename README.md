@@ -289,15 +289,27 @@ $article->comments()->where('status', 'approved')->get();
    php artisan key:generate
    ```
 
-4. Configura tu base de datos en `.env` (por ejemplo `DB_CONNECTION=sqlite` y apunta `DB_DATABASE` al archivo deseado).
+4. Configura tu entorno en `.env`:
+   - Configura tu base de datos (ej. `DB_CONNECTION=sqlite`).
+   - **Importante**: Define la URL de tu aplicación en `APP_URL` (ej. `http://localhost` o tu dominio de producción). Esto es necesario para que las imágenes y enlaces se generen correctamente.
 
-5. Ejecuta migraciones y seeders iniciales:
+5. Preparar imagen de prueba (Opcional):
+   Para que los artículos generados por el seeder tengan una imagen destacada, copia la imagen de ejemplo a la carpeta de storage:
+   ```bash
+   # Asegúrate de que el directorio exista
+   mkdir -p storage/app/public/images
+   
+   # Copia la imagen
+   cp public/images/image_article_example.jpg storage/app/public/images/
+   ```
+
+6. Ejecuta migraciones y seeders iniciales:
    ```bash
    php artisan migrate --seed
    ```
    - El seeder crea un usuario administrador por defecto `admin@admin.com` / `password`.
 
-6. Crea el enlace simbólico de storage:
+7. Crea el enlace simbólico de storage:
 
    **Para desarrollo local** (recomendado):
    ```bash
@@ -334,14 +346,14 @@ $article->comments()->where('status', 'approved')->get();
       ```
       Deberías ver algo como: `storage -> ../storage/app/public`
 
-7. Compila los assets:
+8. Compila los assets:
    ```bash
    npm run dev   # para entorno de desarrollo
    # o
    npm run build # para producción
    ```
 
-8. Lanza el servidor de desarrollo:
+9. Lanza el servidor de desarrollo:
    ```bash
    php artisan serve
    ```

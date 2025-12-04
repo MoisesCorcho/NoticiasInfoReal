@@ -18,7 +18,9 @@ class ArticleFactory extends Factory
 
     public function definition(): array
     {
-        $title = $this->faker->unique()->sentence(6);
+        do {
+            $title = $this->faker->unique()->text(120);
+        } while (strlen($title) < 100);
         $status = $this->faker->randomElement(EnumArticleStatus::values());
 
         $relativeImagePath = 'images/image_article_example.jpg';
