@@ -45,7 +45,7 @@
                             {{ $article->comments->count() }}
                         </span>
                     </div>
-                    {{-- Botón de compartir --}}
+                    {{-- Botones de compartir: parte superior --}}
                     <x-ui.share-buttons :article="$article" />
                 </div>
             </header>
@@ -59,7 +59,27 @@
             @endif
 
             {{-- Cuerpo del Artículo --}}
-            <div class="prose prose-lg max-w-none [html[data-theme=dark]_&]:prose-invert prose-img:rounded-lg prose-headings:font-bold prose-headings:[html[data-theme=light]_&]:text-gray-900 prose-a:text-red-primary hover:prose-a:text-red-700 [html[data-theme=light]_&]:prose-p:text-gray-700 transition-colors duration-200 [&_figcaption]:hidden">
+            <div
+                x-data="{
+                    init() {
+                        // Regex único para: Extensiones solas O Extensiones + Peso
+                        const badCaption = /\.(jpg|jpeg|png|gif|webp|bmp|svg)(\s+\d+(\.\d+)?\s*[KMGTP]?B)?$/i;
+
+                        this.$el.querySelectorAll('figure').forEach(fig => {
+                            const cap = fig.querySelector('figcaption');
+                            if (!cap) return;
+
+                            const text = cap.innerText.trim();
+                            const srcName = fig.querySelector('img')?.src?.split('/').pop()?.toLowerCase();
+
+                            // Eliminar si: Vacío OR Coincide Regex OR Coincide nombre de archivo imagen
+                            if (!text || badCaption.test(text) || (srcName && text.toLowerCase() === decodeURIComponent(srcName))) {
+                                cap.remove();
+                            }
+                        });
+                    }
+                }"
+                class="prose prose-lg max-w-none [html[data-theme=dark]_&]:prose-invert prose-img:rounded-lg prose-headings:font-bold prose-headings:[html[data-theme=light]_&]:text-gray-900 prose-a:text-red-primary hover:prose-a:text-red-700 [html[data-theme=light]_&]:prose-p:text-gray-700 transition-colors duration-200">
                 {!! $article->content !!}
             </div>
 
@@ -76,6 +96,15 @@
                     </div>
                 </div>
             @endif
+
+            {{-- Botones de compartir: parte inferior --}}
+            <div class="mt-8 pt-6 border-t border-white/10 [html[data-theme=light]_&]:border-gray-200 transition-colors duration-200">
+
+                <div class="flex justify-center">
+                    <x-ui.share-buttons :article="$article" />
+                </div>
+
+            </div>
         </article>
 
         <nav class="flex justify-between items-stretch mb-8 gap-4">
