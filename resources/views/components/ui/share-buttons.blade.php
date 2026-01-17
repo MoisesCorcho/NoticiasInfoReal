@@ -6,7 +6,7 @@
     $description = $article->excerpt ?? $title;
 
     // URLs de compartir
-    $whatsappUrl = 'https://wa.me/?text=' . urlencode($title . ' ' . $url);
+    $whatsappUrl = 'https://wa.me/?text=' . urlencode($url);
     $facebookUrl = 'https://www.facebook.com/sharer/sharer.php?u=' . urlencode($url);
     $twitterUrl = 'https://twitter.com/intent/tweet?text=' . urlencode($title) . '&url=' . urlencode($url);
     $linkedinUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=' . urlencode($url);
