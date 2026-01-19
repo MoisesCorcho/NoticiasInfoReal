@@ -109,7 +109,7 @@ class ArticleResource extends Resource
                                 Section::make('Asociaciones')
                                     ->schema([
                                         Forms\Components\Select::make('user_id')
-                                            ->relationship('author', 'name', fn(Builder $query) => $query->where('email', '!=', 'admin@admin.com'))
+                                            ->relationship('author', 'name', fn(Builder $query) => $query->whereHas('roles', fn ($query) => $query->where('name', 'Editor')))
                                             ->searchable()
                                             ->preload()
                                             ->label('Autor')
