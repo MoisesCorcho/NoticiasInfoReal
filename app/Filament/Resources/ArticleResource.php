@@ -114,6 +114,8 @@ class ArticleResource extends Resource
                                             ->preload()
                                             ->label('Autor')
                                             ->required()
+                                            ->default(fn () => auth()->id())
+                                            ->hidden(fn () => filament()->getCurrentPanel()->getId() === 'editor')
                                             ->createOptionForm([
                                                 Forms\Components\TextInput::make('name')
                                                     ->label('Nombre')
