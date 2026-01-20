@@ -17,6 +17,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Shanerbaner82\PanelRoles\PanelRoles;
 
 class EditorPanelProvider extends PanelProvider
 {
@@ -53,6 +54,10 @@ class EditorPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+            ])
+            ->plugins([
+                PanelRoles::make()
+                ->restrictedRoles(['Editor', 'super_admin']),
             ])
             ->authMiddleware([
                 Authenticate::class,
