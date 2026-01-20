@@ -6,6 +6,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use App\Filament\Editor\Pages\EditProfile;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -30,7 +31,7 @@ class EditorPanelProvider extends PanelProvider
             ->brandName('InfoReal')
             ->brandLogo(fn () => view('filament.logo'))
             ->favicon(asset('images/logos/Isotipo InfoReal Rojo.png'))
-            ->profile()
+            ->profile(EditProfile::class)
             ->colors([
                 'primary' => Color::Slate,
             ])
