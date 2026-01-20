@@ -109,11 +109,13 @@ class ArticleResource extends Resource
                                 Section::make('Asociaciones')
                                     ->schema([
                                         Forms\Components\Select::make('user_id')
-                                            ->relationship('author', 'name', fn(Builder $query) => $query->where('email', '!=', 'admin@admin.com'))
+                                            ->relationship('author', 'name', fn(Builder $query) => $query->whereHas('roles', fn ($query) => $query->where('name', 'Editor')))
                                             ->searchable()
                                             ->preload()
                                             ->label('Autor')
                                             ->required()
+                                            ->default(fn () => auth()->id())
+                                            ->hidden(fn () => filament()->getCurrentPanel()->getId() === 'editor')
                                             ->createOptionForm([
                                                 Forms\Components\TextInput::make('name')
                                                     ->label('Nombre')
