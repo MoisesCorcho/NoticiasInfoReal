@@ -27,7 +27,7 @@
 
     {{-- Linea de botones de compartir --}}
     <div>
-        <div class="flex flex-row gap-5">
+        <div class="flex gap-2 md:flex-row md:gap-5">
             {{-- WhatsApp --}}
             <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener noreferrer"
                 class="flex items-center justify-center w-10 h-10 rounded-full bg-[#18181C] [html[data-theme=light]_&]:bg-gray-100 hover:bg-[#333233] [html[data-theme=light]_&]:hover:bg-gray-200 border border-white/20 [html[data-theme=light]_&]:border-gray-300 transition-colors duration-200 shrink-0"

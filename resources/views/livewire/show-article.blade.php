@@ -23,7 +23,7 @@
                 </h1>
 
                 {{-- Metadatos --}}
-                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-gray-400 [html[data-theme=light]_&]:text-gray-600 text-sm border-b border-white/10 [html[data-theme=light]_&]:border-gray-200 pb-4 mb-6 transition-colors duration-200">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-gray-400 [html[data-theme=light]_&]:text-gray-600 text-sm border-b border-white/10 [html[data-theme=light]_&]:border-gray-200 pb-4 mb-6 transition-colors duration-200">
                     <div class="flex flex-wrap items-center gap-4">
                         <span class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
