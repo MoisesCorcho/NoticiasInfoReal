@@ -43,7 +43,6 @@ class UserResource extends Resource
                             ->label('Imagen de Perfil')
                             ->image()
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
-                            ->required()
                             ->directory('users/images')
                             ->imageEditor(),
 
