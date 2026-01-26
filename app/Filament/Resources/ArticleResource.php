@@ -65,7 +65,8 @@ class ArticleResource extends Resource
                                             ->label('Contenido')
                                             ->required()
                                             ->columnSpanFull()
-                                            ->fileAttachmentsDirectory('articles/images'),
+                                            ->fileAttachmentsDirectory('articles/images')
+                                            ->helperText('⚠️ Nota Importante: Para asegurar que las imágenes se carguen correctamente, sube únicamente imágenes JPG, JPEG o PNG. Asegúrate de esperar a que todas las imágenes terminen de cargarse al 100% antes de guardar.'),
 
                                         Forms\Components\Textarea::make('excerpt')
                                             ->label('Resumen')
@@ -114,7 +115,7 @@ class ArticleResource extends Resource
                                             ->preload()
                                             ->label('Autor')
                                             ->required()
-                                            ->default(fn () => auth()->id())
+                                            ->default(fn () => auth()->user()?->hasRole('Editor') ? auth()->id() : null)
                                             ->hidden(fn () => filament()->getCurrentPanel()->getId() === 'editor')
                                             ->createOptionForm([
                                                 Forms\Components\TextInput::make('name')
