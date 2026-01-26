@@ -39,7 +39,7 @@
                         </svg>
                     </a>
                     <a href="https://x.com/inforealnoticia?s=11"
-                        class="text-gray-400 [html[data-theme=light]_&]:text-gray-600 hover:text-white [html[data-theme=light]_&]:hover:text-gray-900 transition-colors"
+                        class="text-gray-400 [html[data-theme=light]_&]:text-gray-400 hover:text-white [html[data-theme=light]_&]:hover:text-white transition-colors"
                         aria-label="X (Twitter)">
                         <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path
