@@ -45,9 +45,6 @@ class Article extends Model
     #[Scope]
     public function featured(Builder $query): void
     {
-        // Si tuvieras un campo boolean 'is_featured', lo usarías aquí.
-        // Por ahora, asumiremos que los que tienen imagen destacada pueden ser "featured"
-        // o simplemente los más recientes.
         $query->whereNotNull('featured_image_url');
     }
 
@@ -61,7 +58,7 @@ class Article extends Model
     // Relación: Pertenece a un autor (User)
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id')->withTrashed();
     }
 
     // Relación: Pertenece a una categoría principal

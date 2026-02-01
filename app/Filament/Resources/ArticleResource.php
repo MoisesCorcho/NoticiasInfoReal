@@ -65,7 +65,8 @@ class ArticleResource extends Resource
                                             ->label('Contenido')
                                             ->required()
                                             ->columnSpanFull()
-                                            ->fileAttachmentsDirectory('articles/images'),
+                                            ->fileAttachmentsDirectory('articles/images')
+                                            ->helperText('⚠️ Nota Importante: Para asegurar que las imágenes se carguen correctamente, sube únicamente imágenes JPG, JPEG o PNG. Asegúrate de esperar a que todas las imágenes terminen de cargarse al 100% antes de guardar.'),
 
                                         Forms\Components\Textarea::make('excerpt')
                                             ->label('Resumen')
@@ -109,11 +110,13 @@ class ArticleResource extends Resource
                                 Section::make('Asociaciones')
                                     ->schema([
                                         Forms\Components\Select::make('user_id')
-                                            ->relationship('author', 'name', fn(Builder $query) => $query->where('email', '!=', 'admin@admin.com'))
+                                            ->relationship('author', 'name', fn(Builder $query) => $query->whereHas('roles', fn ($query) => $query->where('name', 'Editor')))
                                             ->searchable()
                                             ->preload()
                                             ->label('Autor')
                                             ->required()
+                                            ->default(fn () => auth()->user()?->hasRole('Editor') ? auth()->id() : null)
+                                            ->hidden(fn () => filament()->getCurrentPanel()->getId() === 'editor')
                                             ->createOptionForm([
                                                 Forms\Components\TextInput::make('name')
                                                     ->label('Nombre')

@@ -23,7 +23,7 @@
                 </h1>
 
                 {{-- Metadatos --}}
-                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-gray-400 [html[data-theme=light]_&]:text-gray-600 text-sm border-b border-white/10 [html[data-theme=light]_&]:border-gray-200 pb-4 mb-6 transition-colors duration-200">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-gray-400 [html[data-theme=light]_&]:text-gray-600 text-sm border-b border-white/10 [html[data-theme=light]_&]:border-gray-200 pb-4 mb-6 transition-colors duration-200">
                     <div class="flex flex-wrap items-center gap-4">
                         <span class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
@@ -32,20 +32,17 @@
                             {{ $article->published_at->translatedFormat('d F, Y') }}
                         </span>
                         <span class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                            </svg>
+                            @if($article->author->image)
+                                <img src="{{ Storage::url($article->author->image) }}" alt="{{ $article->author->name }}" class="w-8 h-8 md:w-10 md:h-10 rounded-full mr-2 object-cover">
+                            @else
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                </svg>
+                            @endif
                             {{ $article->author->name }}
                         </span>
-                        {{-- Contador de comentarios si quieres --}}
-                        <span class="flex items-center">
-                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
-                               <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-                             </svg>
-                            {{ $article->comments->count() }}
-                        </span>
                     </div>
-                    {{-- Botón de compartir --}}
+                    {{-- Botones de compartir: parte superior --}}
                     <x-ui.share-buttons :article="$article" />
                 </div>
             </header>
@@ -59,7 +56,27 @@
             @endif
 
             {{-- Cuerpo del Artículo --}}
-            <div class="prose prose-lg max-w-none [html[data-theme=dark]_&]:prose-invert prose-img:rounded-lg prose-headings:font-bold prose-headings:[html[data-theme=light]_&]:text-gray-900 prose-a:text-red-primary hover:prose-a:text-red-700 [html[data-theme=light]_&]:prose-p:text-gray-700 transition-colors duration-200 [&_figcaption]:hidden">
+            <div
+                x-data="{
+                    init() {
+                        // Regex único para: Extensiones solas O Extensiones + Peso
+                        const badCaption = /\.(jpg|jpeg|png|gif|webp|bmp|svg)(\s+\d+(\.\d+)?\s*[KMGTP]?B)?$/i;
+
+                        this.$el.querySelectorAll('figure').forEach(fig => {
+                            const cap = fig.querySelector('figcaption');
+                            if (!cap) return;
+
+                            const text = cap.innerText.trim();
+                            const srcName = fig.querySelector('img')?.src?.split('/').pop()?.toLowerCase();
+
+                            // Eliminar si: Vacío OR Coincide Regex OR Coincide nombre de archivo imagen
+                            if (!text || badCaption.test(text) || (srcName && text.toLowerCase() === decodeURIComponent(srcName))) {
+                                cap.remove();
+                            }
+                        });
+                    }
+                }"
+                class="prose prose-lg max-w-none [html[data-theme=dark]_&]:prose-invert prose-img:rounded-lg prose-headings:font-bold prose-headings:[html[data-theme=light]_&]:text-gray-900 prose-a:text-red-primary hover:prose-a:text-red-700 [html[data-theme=light]_&]:prose-p:text-gray-700 transition-colors duration-200">
                 {!! $article->content !!}
             </div>
 
@@ -76,6 +93,15 @@
                     </div>
                 </div>
             @endif
+
+            {{-- Botones de compartir: parte inferior --}}
+            <div class="mt-8 pt-6 border-t border-white/10 [html[data-theme=light]_&]:border-gray-200 transition-colors duration-200">
+
+                <div class="flex justify-center">
+                    <x-ui.share-buttons :article="$article" />
+                </div>
+
+            </div>
         </article>
 
         <nav class="flex justify-between items-stretch mb-8 gap-4">

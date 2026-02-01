@@ -6,55 +6,28 @@
     $description = $article->excerpt ?? $title;
 
     // URLs de compartir
-    $whatsappUrl = 'https://wa.me/?text=' . urlencode($title . ' ' . $url);
+    $whatsappUrl = 'https://wa.me/?text=' . urlencode($url);
     $facebookUrl = 'https://www.facebook.com/sharer/sharer.php?u=' . urlencode($url);
     $twitterUrl = 'https://twitter.com/intent/tweet?text=' . urlencode($title) . '&url=' . urlencode($url);
     $linkedinUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=' . urlencode($url);
     $emailUrl = 'mailto:?subject=' . urlencode($title) . '&body=' . urlencode($description . ' ' . $url);
 @endphp
 
-<div x-data="{ 
-    showShareMenu: false,
+<div x-data="{
     copied: false,
     copyLink() {
         navigator.clipboard.writeText('{{ $url }}').then(() => {
             this.copied = true;
-            this.showShareMenu = false; // Opcional: Cerrar el menú automáticamente al copiar
             setTimeout(() => {
                 this.copied = false;
             }, 2000);
         });
     }
-}" class="relative inline-block">
-    {{-- Botón principal de compartir --}}
-    <button @click="showShareMenu = !showShareMenu" @click.away="showShareMenu = false"
-        class="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 [html[data-theme=light]_&]:border-gray-200 bg-[#18181C] [html[data-theme=light]_&]:bg-white hover:bg-[#333233] [html[data-theme=light]_&]:hover:bg-gray-100 transition-colors duration-200"
-        aria-label="Compartir artículo">
-        <!-- Icono de compartir estilizado (Flecha curva rellena corregida) -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-            class="w-5 h-5 text-gray-400 [html[data-theme=light]_&]:text-gray-600">
-            <path d="M14 9V5l7 7-7 7v-4.1c-5 0-8.5 1.6-11 5.1 1-5 4-10 11-11z" />
-        </svg>
-    </button>
+}" class="inline-block">
 
-    {{-- Feedback visual (Tooltip) --}}
-    <div x-show="copied" x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 translate-y-[-10px]" x-transition:enter-end="opacity-100 translate-y-0"
-        x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
-        x-transition:leave-end="opacity-0 translate-y-[-10px]" x-cloak
-        class="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-3 py-1.5 text-xs font-bold text-white bg-green-600 rounded-md shadow-lg whitespace-nowrap z-50 pointer-events-none">
-        ¡Enlace copiado!
-        {{-- Flechita del tooltip apuntando hacia arriba --}}
-        <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-green-600 rotate-45"></div>
-    </div>
-
-    {{-- Menú desplegable de opciones de compartir --}}
-    <div x-show="showShareMenu" x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-        x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
-        x-transition:leave-end="opacity-0 scale-95" x-cloak
-        class="absolute top-full left-0 sm:left-auto sm:right-0 origin-top-left sm:origin-top-right mt-2 w-max bg-[#333233] [html[data-theme=light]_&]:bg-white rounded-lg shadow-2xl border border-white/10 [html[data-theme=light]_&]:border-gray-200 p-5 z-50 transition-colors duration-200">
-        <div class="grid grid-cols-3 gap-5">
+    {{-- Linea de botones de compartir --}}
+    <div>
+        <div class="flex gap-2 md:flex-row md:gap-5">
             {{-- WhatsApp --}}
             <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener noreferrer"
                 class="flex items-center justify-center w-10 h-10 rounded-full bg-[#18181C] [html[data-theme=light]_&]:bg-gray-100 hover:bg-[#333233] [html[data-theme=light]_&]:hover:bg-gray-200 border border-white/20 [html[data-theme=light]_&]:border-gray-300 transition-colors duration-200 shrink-0"
@@ -123,21 +96,35 @@
                 </svg>
             </a>
 
-            {{-- Copiar link (Icono simple dentro del menú) --}}
-            <button @click="copyLink()"
-                class="flex items-center justify-center w-10 h-10 rounded-full bg-[#18181C] [html[data-theme=light]_&]:bg-gray-100 hover:bg-[#333233] [html[data-theme=light]_&]:hover:bg-gray-200 border border-white/20 [html[data-theme=light]_&]:border-gray-300 transition-colors duration-200 shrink-0"
-                aria-label="Copiar enlace">
-                <svg x-show="!copied" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke-width="1.5" stroke="currentColor"
-                    class="w-5 h-5 text-white [html[data-theme=light]_&]:text-gray-700">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
-                </svg>
-                <svg x-show="copied" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-green-500">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                </svg>
-            </button>
+            {{-- Copiar link (Icono simple) --}}
+            <div class="relative">
+
+                {{-- Feedback visual (Tooltip) --}}
+                <div x-show="copied" x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-[-10px]" x-transition:enter-end="opacity-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 translate-y-[-10px]" x-cloak
+                    class="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-3 py-1.5 text-xs font-bold text-white bg-green-600 rounded-md shadow-lg whitespace-nowrap z-50 pointer-events-none">
+                    ¡Enlace copiado!
+                    {{-- Flechita del tooltip apuntando hacia arriba --}}
+                    <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-green-600 rotate-45"></div>
+                </div>
+
+                <button @click="copyLink()"
+                    class="flex items-center justify-center w-10 h-10 rounded-full bg-[#18181C] [html[data-theme=light]_&]:bg-gray-100 hover:bg-[#333233] [html[data-theme=light]_&]:hover:bg-gray-200 border border-white/20 [html[data-theme=light]_&]:border-gray-300 transition-colors duration-200 shrink-0"
+                    aria-label="Copiar enlace">
+                    <svg x-show="!copied" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor"
+                        class="w-5 h-5 text-white [html[data-theme=light]_&]:text-gray-700">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+                    </svg>
+                    <svg x-show="copied" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-green-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                </button>
+            </div>
         </div>
     </div>
 </div>
