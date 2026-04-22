@@ -23,7 +23,7 @@
                 }
             });
         }
-    }" class="relative w-full h-[250px] md:h-[430px] overflow-hidden rounded-lg shadow-2xl bg-black border border-white/10">
+    }" class="relative w-full aspect-[21/9] md:aspect-[2493/430] overflow-hidden rounded-lg shadow-2xl bg-black border border-white/10">
         
         <template x-for="(ad, index) in ads" :key="index">
             <div x-show="active === index" 
