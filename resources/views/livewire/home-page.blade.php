@@ -4,6 +4,9 @@
         <x-home.hero-section :articles="$heroArticles" />
     @endif
 
+    {{-- BANNER PUBLICITARIO --}}
+    <x-home.ad-banner />
+
     {{-- WIDGET DE BÚSQUEDA --}}
     <livewire:search-widget />
 
@@ -52,8 +55,6 @@
         @endforeach
     @endif
 
-    {{-- BANNER PUBLICITARIO --}}
-    <x-home.ad-banner />
 
     {{-- SECCIÓN 3: ÚLTIMAS NOTICIAS (Grid estándar) --}}
     @if ($latestArticles->isNotEmpty())
