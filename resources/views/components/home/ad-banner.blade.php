@@ -28,17 +28,17 @@
         <template x-for="(ad, index) in ads" :key="index">
             <div x-show="active === index" 
                  x-transition:enter="transition ease-out duration-700"
-                 x-transition:enter-start="opacity-0 scale-105"
-                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
                  x-transition:leave="transition ease-in duration-700"
-                 x-transition:leave-start="opacity-100 scale-100"
-                 x-transition:leave-end="opacity-0 scale-95"
-                 class="absolute inset-0 w-full h-full">
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="absolute inset-0 w-full h-full flex items-center justify-center">
                 
-                <a :href="ad.url" target="_blank" class="block w-full h-full group">
+                <a :href="ad.url" target="_blank" class="block w-full h-full group bg-black">
                     <video :id="'ad-video-' + index"
                            :src="ad.video" 
-                           class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300" 
+                           class="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300" 
                            autoplay muted playsinline 
                            @timeupdate="updateProgress($event)"
                            @ended="next()"></video>
