@@ -7,6 +7,8 @@
     {{-- BANNER PUBLICITARIO --}}
     <x-home.ad-banner />
 
+    {{-- WIDGET DE BÚSQUEDA --}}
+    <livewire:search-widget />
 
     {{-- SECCIÓN 2: SECCIONES DE PORTADA (Carrusel) --}}
     @php
