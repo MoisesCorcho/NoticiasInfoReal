@@ -7,12 +7,39 @@
     <div x-data="{
         active: 0,
         progress: 0,
+        isMobile: window.innerWidth < 768,
         ads: [
-            { video: '{{ asset('video/camara-de-comercio.mp4') }}', url: 'https://ccmonteria.org.co/' },
-            { video: '{{ asset('video/unisinu.mp4') }}', url: 'https://www.unisinu.edu.co/' },
-            { video: '{{ asset('video/urra.mp4') }}', url: 'https://urra.com.co/' }
+            { 
+                desktop: '{{ asset('video/camara-de-comercio.mp4') }}', 
+                mobile: '{{ asset('video/mobile/camara-de-comercio-mobile.mp4') }}',
+                url: 'https://ccmonteria.org.co/' 
+            },
+            { 
+                desktop: '{{ asset('video/unisinu.mp4') }}', 
+                mobile: '{{ asset('video/mobile/unisinu-mobile.mp4') }}',
+                url: 'https://www.unisinu.edu.co/' 
+            },
+            { 
+                desktop: '{{ asset('video/urra.mp4') }}', 
+                mobile: '{{ asset('video/mobile/urra-mobile.mp4') }}',
+                url: 'https://urra.com.co/' 
+            }
         ],
         init() {
+            window.addEventListener('resize', () => {
+                let wasMobile = this.isMobile;
+                this.isMobile = window.innerWidth < 768;
+                if (wasMobile !== this.isMobile) {
+                    this.$nextTick(() => {
+                        let video = document.getElementById('{{ $id }}-video-' + this.active);
+                        if (video) {
+                            video.load();
+                            video.play().catch(e => console.log('Autoplay blocked', e));
+                        }
+                    });
+                }
+            });
+
             this.$watch('active', (val, oldVal) => {
                 this.progress = 0;
                 let oldVideo = document.getElementById('{{ $id }}-video-' + oldVal);
@@ -41,7 +68,7 @@
         next() {
             this.active = (this.active + 1) % this.ads.length;
         }
-    }" class="relative w-full aspect-[2492/430] overflow-hidden rounded-lg shadow-2xl bg-black border border-white/10">
+    }" class="relative w-full aspect-[798/364] md:aspect-[2492/430] overflow-hidden rounded-lg shadow-2xl bg-black border border-white/10">
 
         <template x-for="(ad, index) in ads" :key="index">
             <div x-show="active === index"
@@ -55,8 +82,8 @@
 
                 <a :href="ad.url" target="_blank" class="block w-full h-full group">
                     <video :id="'{{ $id }}-video-' + index"
-                           :src="ad.video"
-                           class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                           :src="isMobile ? ad.mobile : ad.desktop"
+                           class="w-full h-full object-contain md:object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300"
                            muted playsinline
                            @timeupdate="updateProgress($event, index)"
                            @ended="next()"></video>
