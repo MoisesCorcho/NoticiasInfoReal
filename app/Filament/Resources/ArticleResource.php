@@ -66,7 +66,8 @@ class ArticleResource extends Resource
                                             ->required()
                                             ->columnSpanFull()
                                             ->fileAttachmentsDirectory('articles/images')
-                                            ->helperText('⚠️ Nota Importante: Para asegurar que las imágenes se carguen correctamente, sube únicamente imágenes JPG, JPEG o PNG. Asegúrate de esperar a que todas las imágenes terminen de cargarse al 100% antes de guardar.'),
+                                            ->fileAttachmentsValidationRules(['mimes:jpeg,jpg'])
+                                            ->helperText('⚠️ Nota Importante: Para asegurar que las imágenes se carguen correctamente, sube únicamente imágenes JPG o JPEG. Asegúrate de esperar a que todas las imágenes terminen de cargarse al 100% antes de guardar.'),
 
                                         Forms\Components\Textarea::make('excerpt')
                                             ->label('Resumen')
@@ -85,7 +86,7 @@ class ArticleResource extends Resource
                                         Forms\Components\FileUpload::make('featured_image_url')
                                             ->label('Imagen destacada')
                                             ->image()
-                                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
+                                            ->acceptedFileTypes(['image/jpeg', 'image/jpg'])
                                             ->required()
                                             ->directory('articles/featured')
                                             ->imageEditor(),
