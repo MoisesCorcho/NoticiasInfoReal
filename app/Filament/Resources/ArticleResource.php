@@ -85,7 +85,7 @@ class ArticleResource extends Resource
                                         Forms\Components\FileUpload::make('featured_image_url')
                                             ->label('Imagen destacada')
                                             ->image()
-                                            ->acceptedFileTypes(['image/jpg'])
+                                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
                                             ->required()
                                             ->directory('articles/featured')
                                             ->imageEditor(),
