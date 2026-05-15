@@ -52,7 +52,7 @@ class ArticleResource extends Resource
                                             ->label('Título')
                                             ->required()
                                             ->live(onBlur: true) // Genera el slug cuando el usuario termina de escribir
-                                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                                            ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
                                         Forms\Components\TextInput::make('slug')
                                             ->label('Slug')
@@ -85,7 +85,7 @@ class ArticleResource extends Resource
                                         Forms\Components\FileUpload::make('featured_image_url')
                                             ->label('Imagen destacada')
                                             ->image()
-                                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
+                                            ->acceptedFileTypes(['image/jpg'])
                                             ->required()
                                             ->directory('articles/featured')
                                             ->imageEditor(),
@@ -110,13 +110,13 @@ class ArticleResource extends Resource
                                 Section::make('Asociaciones')
                                     ->schema([
                                         Forms\Components\Select::make('user_id')
-                                            ->relationship('author', 'name', fn(Builder $query) => $query->whereHas('roles', fn ($query) => $query->where('name', 'Editor')))
+                                            ->relationship('author', 'name', fn(Builder $query) => $query->whereHas('roles', fn($query) => $query->where('name', 'Editor')))
                                             ->searchable()
                                             ->preload()
                                             ->label('Autor')
                                             ->required()
-                                            ->default(fn () => auth()->user()?->hasRole('Editor') ? auth()->id() : null)
-                                            ->hidden(fn () => filament()->getCurrentPanel()->getId() === 'editor')
+                                            ->default(fn() => auth()->user()?->hasRole('Editor') ? auth()->id() : null)
+                                            ->hidden(fn() => filament()->getCurrentPanel()->getId() === 'editor')
                                             ->createOptionForm([
                                                 Forms\Components\TextInput::make('name')
                                                     ->label('Nombre')
@@ -146,7 +146,7 @@ class ArticleResource extends Resource
                                                     ->label('Nombre')
                                                     ->required()
                                                     ->live(onBlur: true)
-                                                    ->afterStateUpdated(fn (Forms\Set $set, $state) => $set('slug', Str::slug($state))),
+                                                    ->afterStateUpdated(fn(Forms\Set $set, $state) => $set('slug', Str::slug($state))),
                                                 Forms\Components\TextInput::make('slug')
                                                     ->label('Slug')
                                                     ->required()
@@ -164,7 +164,7 @@ class ArticleResource extends Resource
                                                     ->label('Nombre')
                                                     ->required()
                                                     ->live(onBlur: true)
-                                                    ->afterStateUpdated(fn (Forms\Set $set, $state) => $set('slug', Str::slug($state))),
+                                                    ->afterStateUpdated(fn(Forms\Set $set, $state) => $set('slug', Str::slug($state))),
                                                 Forms\Components\TextInput::make('slug')
                                                     ->label('Slug')
                                                     ->required()
@@ -207,8 +207,8 @@ class ArticleResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label('Estado')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => EnumArticleStatus::labels()[$state] ?? $state)
-                    ->color(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => EnumArticleStatus::labels()[$state] ?? $state)
+                    ->color(fn(string $state): string => match ($state) {
                         EnumArticleStatus::Draft->value => 'gray',
                         EnumArticleStatus::Scheduled->value => 'warning',
                         EnumArticleStatus::Published->value => 'success',
